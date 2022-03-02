@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.rarity {
+  background: conic-gradient(
+    from 219.12deg at 73.85% 25.48%,
+    #2cb1fe -184.54deg,
+    #019bff 57.84deg,
+    #1ba7ff 63.8deg,
+    #2cb1fe 175.46deg,
+    #019bff 417.84deg
+  );
+  padding: 5em 0 0 0;
+  h2 {
+    color: #3ec6ff;
+    // margin-top: 0.7em;
+    text-align: center;
+    font-size: 7em;
+  }
+}
+
+@media (max-width: $sm) {
+  .rarity {
+    h2 {
+      font-size: 4em;
+    }
+  }
+}

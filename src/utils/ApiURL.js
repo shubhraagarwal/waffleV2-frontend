@@ -1,0 +1,7 @@
+// export const API_URL = 'https://api.new-coins.app'
+// export const API_URL = 'http://192.168.18.80:3005'
+// export const API_URL = 'http://192.168.18.10:3001'
+// export const API_URL = 'https://api.safedingo.com'
+// export const API_URL = 'http://192.168.18.48:3000'
+export const API_URL = 'https://apiwaffle.safedingo.com'
+// export const API_URL = 'http://192.168.18.10:3005'

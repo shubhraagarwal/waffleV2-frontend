@@ -1,0 +1,41 @@
+@import '../../styles/variables';
+
+.specs {
+  padding-top: 150px;
+  background: conic-gradient(
+    from 151.33deg at 42.63% 45.64%,
+    #fe4dfd 0deg,
+    #ff7eff 265.6deg,
+    #fe4dff 360deg
+  );
+  h2 {
+    color: #fe4dfd;
+    top: 50px;
+    &.mob-heading {
+      position: relative;
+    }
+  }
+  img {
+    max-width: 500px;
+  }
+  button {
+    box-shadow: 4px 4px 0px #ffca61;
+    img {
+      max-width: 24px;
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .specs {
+    padding-top: 5em;
+    h2 {
+      width: 100%;
+      font-size: 3em;
+      margin-bottom: 2em;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+}

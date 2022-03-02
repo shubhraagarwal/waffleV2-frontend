@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.footer {
+  padding: 1em 0;
+  background: conic-gradient(
+    from 163.9deg at 68.93% 35.82%,
+    #febc20 0deg,
+    #ffb411 80.4deg,
+    #ffda65 123.46deg,
+    #febc20 360deg
+  );
+  text-align: center;
+  color: $white;
+  p {
+    text-align: left;
+  }
+  button {
+    box-shadow: 4px 4px 0px #ffca61;
+    margin: 0 0.5em;
+    height: 100%;
+    img {
+      max-width: 24px;
+    }
+  }
+}

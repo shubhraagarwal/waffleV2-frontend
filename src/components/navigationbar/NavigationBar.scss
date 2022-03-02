@@ -1,0 +1,45 @@
+@import '../../styles/_variables';
+@import '../../styles/mixins';
+
+.navbar {
+  // padding-top: 1em;
+  // padding-bottom: 1em;
+  background: conic-gradient(
+    from 160.56deg at 50% 50%,
+    #fe1931 0deg,
+    #fe4459 180.34deg,
+    #ff1830 360deg
+  );
+  .hamburger {
+    max-width: 26px;
+  }
+  .navbar-brand {
+    color: $white;
+    font-family: 'Luckiest Guy', cursive;
+    &:hover {
+      color: $white;
+    }
+  }
+  .nav-item {
+    margin: 0 1.2em;
+    @include justify-center;
+    .nav-link {
+      color: $white;
+      font-family: 'Superscratchy', sans-serif;
+      &.active {
+        color: #f0f0f0;
+      }
+      &:hover {
+        color: $white;
+        cursor: pointer;
+      }
+    }
+    .nav-link,
+    button {
+      font-size: 14px;
+      &.cta {
+        box-shadow: 4px 4px 0px #ffca61;
+      }
+    }
+  }
+}

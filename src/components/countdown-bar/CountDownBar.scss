@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+.countdown-bar {
+  color: #935df9;
+  margin-top: 2em;
+  .time-container {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    li {
+      margin-right: 1em;
+    }
+  }
+}
+
+@media (max-width: $sm) {
+  .countdown-bar {
+    margin-bottom: 2em;
+    .time-container {
+      li {
+        margin: 0 0.5em;
+      }
+    }
+  }
+}
+
+iframe{
+  display: none;
+  position: unset!important;
+  top: 0px!important;
+  left: 0px!important;
+  width: 0px!important;
+  height: 0px!important;
+}

@@ -1,0 +1,66 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.roadmap {
+  background: conic-gradient(
+    from 140.92deg at 10.96% 48.47%,
+    #7f3efe 0deg,
+    #6b24fe 22.78deg,
+    #935df9 180.34deg,
+    #7f3efe 360deg
+  );
+  h2 {
+    position: relative;
+    margin-bottom: 0.8em;
+    color: #6b24fe;
+  }
+  .roadmap-card {
+    &.active {
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        height: 105%;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        border: 2px solid #ffbb10;
+        border-radius: 40px;
+        box-sizing: border-box;
+        filter: drop-shadow(0px 8px 0px #ffbb10);
+      }
+      // &::after {
+      //   content: '';
+      //   display: block;
+      //   height: 200px;
+      //   width: 200px;
+      //   background-image: url('../../assets/waffle6.png');
+      //   @include background-fit;
+      //   position: absolute;
+      //   top: 0;
+      //   transform: translateY(-100%);
+      //   left: 0;
+      // }
+    }
+    color: $white;
+    padding: 2em 1em;
+    h3 {
+      padding-left: 1em;
+      margin-bottom: 1em;
+    }
+    ul {
+      li {
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+}
+@media (max-width: $sm) {
+  .roadmap {
+    h2 {
+      margin-bottom: 200px;
+    }
+  }
+}
