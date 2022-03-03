@@ -8,7 +8,7 @@ const Raffle = () => {
     <div>
       <NavigationBar home />
       <DailyRaffle />
-      <WhiteList />
+  
     </div>
   );
 };

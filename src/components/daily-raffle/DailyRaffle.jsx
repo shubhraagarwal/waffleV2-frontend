@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './DailyRaffle.scss';
 import logo from '../../assets/logo.png';
@@ -15,6 +16,8 @@ import useAuth from "../../hooks/useAuth";
 // import JoinDiscord from '../modal/JoinDiscord';
 import close from '../../assets/close.svg';
 import { number } from 'yup';
+import WhiteList from '../whitelist/WhiteList';
+
 
 const DailyRaffle = () => {
   const [bounce, setBounce] = useState(0);
@@ -29,10 +32,24 @@ const DailyRaffle = () => {
   const [showModal, setShowModal] = useState(false);
   const [discordid, setdiscordid] = useState('');
   const [day, setDay] = useState(0);
+  const [syrCount, setsyrCount] = useState(0);
   // const { Time } = PresaleStartEnd();
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
+
+const syrupSub = () =>{
+  
+    if(syrCount > 0){
+  if(syrCount >= 8){
+    setsyrCount(syrCount - 8);
+  }
+}
+  
+  
+}
+  
+
 
   // let userwhitelist
   // const PromotedCoins = winner?.map((elem) => {
@@ -81,6 +98,7 @@ const DailyRaffle = () => {
   // console.log("day", day)
 
   const handleClick = () => {
+    setBounce(bounce+1);
     const d = new Date();
     const Nowtime = d.getTime();
     const t = (d.getTime() + 500000);
@@ -258,7 +276,11 @@ const DailyRaffle = () => {
   }
 
 
+  
+
+
   return (
+    <>
     <section
       className='container-fluid daily-raffle'
       id='raffle'
@@ -290,19 +312,26 @@ const DailyRaffle = () => {
         </div>
       }
 
-      <h2>Waffle Clicker</h2>
+     
+      <div className='countsclick'>
+      <div className='countsinner'>
+        <h3>{count == 0 ?
+          'WAFFLE CLICKER'
+          :
+          count
+        }</h3>
+      </div>
+    </div>
 
       <div className='container text-center'>
         <div className='top-bar'>
           <div className='d-flex justify-content-center justify-content-md-start flex-column'>
             <div className='balance' data-aos='fade'>
               <img src={syrup} alt='syrup' className='img-fluid ms-2' />
-              {
-                syrup?.syrupQuantity ?
-                  syrup?.syrupQuantity
-                  :
-                  0
-              }
+            
+
+    {syrCount}
+          
             </div>
             <CountDownBar hour={hour} min={min} sec={sec} />
           </div>
@@ -331,18 +360,46 @@ const DailyRaffle = () => {
             onAnimationEnd={() => setBounce(0)}
             bounce={bounce}
           >
-            <img src={face} alt='logo' id='img1' value='5' />
+            <img src={face} alt='logo' id='img1' value='5' onClick={() => {
+              if(count>0){
+            if((count+1)%5 == 0){
+              setsyrCount(syrCount + 4)
+            
+            }
+          }
+          }
+            }/>
+          
             <img
               src={eyes}
               alt='logo'
               id='img1'
               className={inView ? 'mouse parts eyes' : 'parts eyes static'}
               value='3'
-            />
-            <img src={mouth} alt='logo' id='img1' className='parts' />
+              onClick={() => {
+           if(count > 0) {  
+                if((count+1)%5 == 0){
+                  setsyrCount(syrCount + 4)
+                 
+                }
+              }
+              }
+                }/>
+            <img src={mouth} alt='logo' id='img1' className='parts' onClick={() => {
+              if(count > 0){
+              if((count+1)%5 == 0){
+                setsyrCount(syrCount + 4)
+               
+              }
+            }
+            }
+              }/>
+              
           </div>
         </div>
-        <div className='countsclick'>
+
+       
+        {/* <div className='countsclick'>
           <div className='countsinner'>
             <h3>{count == 0 ?
               ''
@@ -350,7 +407,7 @@ const DailyRaffle = () => {
               count
             }</h3>
           </div>
-        </div>
+        </div> */}
         {/* raffle for mobile  */}
         <div className='d-xl-none'>
           <img
@@ -363,7 +420,10 @@ const DailyRaffle = () => {
           />
         </div>
       </div>
+    
     </section>
+    <WhiteList  fun = {syrupSub}/>
+    </>
   );
 };
 

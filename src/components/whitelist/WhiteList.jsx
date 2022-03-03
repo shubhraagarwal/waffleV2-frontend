@@ -5,13 +5,13 @@ import axios from "axios";
 import { API_URL } from "../../utils/ApiURL";
 import { useWeb3React } from "@web3-react/core";
 import { set } from 'lodash';
+import DailyRaffle from '../daily-raffle/DailyRaffle';
 
 
-const WhiteList = () => {
+const WhiteList = (props) => {
   const [whiteListed, setWhiteListed] = useState(false);
 
   const [syrupp, setsyrupp] = useState('');
-
   const [allusers, setallusers] = useState([]);
   const [winner, setwinner] = useState([]);
   const [wintime, setwintime] = useState('');
@@ -189,8 +189,8 @@ const WhiteList = () => {
           </button>
           :
           <button
-            className='wl-btn enter dufhudfh' disabled
-          // onClick={handleBtnClick}
+            className='wl-btn enter dufhudfh' 
+            onClick = {props.fun}
           >
             Complete 8 Syrup Target First
           </button>
