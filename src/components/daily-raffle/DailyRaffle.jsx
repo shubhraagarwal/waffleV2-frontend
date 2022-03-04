@@ -18,7 +18,7 @@ import useAuth from "../../hooks/useAuth";
 import close from '../../assets/close.svg';
 import { number } from 'yup';
 import WhiteList from '../whitelist/WhiteList';
-
+import audio from '../../assets/confetti sound.mp3'
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -71,7 +71,8 @@ const DailyRaffle = () => {
       startVelocity: 45
     });
   }, [makeShot]);
-
+  // const [audio] = useState(new Audio({WaffleSound}));
+  
   const [bounce, setBounce] = useState(0);
   const [lastClick, setLastClick] = useState(0);
   const [syrup, setsyrup] = useState(0);
@@ -99,6 +100,9 @@ const syrupSub = () =>{
 }
   
   
+}
+const onSound = () => {
+  new Audio(audio).play();
 }
   
 
@@ -417,6 +421,7 @@ const syrupSub = () =>{
               if((count+1)%5 == 0){
                 setsyrCount(syrCount + 4)
                 fire();
+                onSound();
               }
               }
             }}>
