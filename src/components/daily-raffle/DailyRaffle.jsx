@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import ReactCanvasConfetti from "react-canvas-confetti";
 import './DailyRaffle.scss';
 import logo from '../../assets/logo.png';
 import syrup from '../../assets/syrup.png';
@@ -18,8 +19,59 @@ import close from '../../assets/close.svg';
 import { number } from 'yup';
 import WhiteList from '../whitelist/WhiteList';
 
+const canvasStyles = {
+  position: "fixed",
+  pointerEvents: "none",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0
+};
 
 const DailyRaffle = () => {
+  const refAnimationInstance = useRef(null);
+
+  const getInstance = useCallback((instance) => {
+    refAnimationInstance.current = instance;
+  }, []);
+
+  const makeShot = useCallback((particleRatio, opts) => {
+    refAnimationInstance.current &&
+      refAnimationInstance.current({
+        ...opts,
+        origin: { y: 0.7 },
+        particleCount: Math.floor(200 * particleRatio)
+      });
+  }, []);
+  const fire = useCallback(() => {
+    makeShot(0.25, {
+      spread: 26,
+      startVelocity: 55
+    });
+
+    makeShot(0.2, {
+      spread: 60
+    });
+
+    makeShot(0.35, {
+      spread: 100,
+      decay: 0.91,
+      scalar: 0.8
+    });
+
+    makeShot(0.1, {
+      spread: 120,
+      startVelocity: 25,
+      decay: 0.92,
+      scalar: 1.2
+    });
+
+    makeShot(0.1, {
+      spread: 120,
+      startVelocity: 45
+    });
+  }, [makeShot]);
+
   const [bounce, setBounce] = useState(0);
   const [lastClick, setLastClick] = useState(0);
   const [syrup, setsyrup] = useState(0);
@@ -360,6 +412,14 @@ const syrupSub = () =>{
             onAnimationEnd={() => setBounce(0)}
             bounce={bounce}
           >
+          <div className="face-fig" onClick={() =>{
+            if(count>0){
+              if((count+1)%5 == 0){
+                setsyrCount(syrCount + 4)
+                fire();
+              }
+              }
+            }}>
             <img src={face} alt='logo' id='img1' value='5' onClick={() => {
               if(count>0){
             if((count+1)%5 == 0){
@@ -394,7 +454,8 @@ const syrupSub = () =>{
             }
             }
               }/>
-              
+              </div>
+              <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
           </div>
         </div>
 
