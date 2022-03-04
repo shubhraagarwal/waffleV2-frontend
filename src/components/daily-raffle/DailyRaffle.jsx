@@ -418,7 +418,7 @@ const onSound = () => {
           >
           <div className="face-fig" onClick={() =>{
             if(count>0){
-              if((count+1)%5 == 0){
+              if((count+1)%500 == 0){
                 setsyrCount(syrCount + 4)
                 fire();
                 onSound();
@@ -427,7 +427,7 @@ const onSound = () => {
             }}>
             <img src={face} alt='logo' id='img1' value='5' onClick={() => {
               if(count>0){
-            if((count+1)%5 == 0){
+            if((count+1)%500 == 0){
               setsyrCount(syrCount + 4)
             
             }
@@ -443,7 +443,7 @@ const onSound = () => {
               value='3'
               onClick={() => {
            if(count > 0) {  
-                if((count+1)%5 == 0){
+                if((count+1)%500 == 0){
                   setsyrCount(syrCount + 4)
                  
                 }
@@ -452,7 +452,7 @@ const onSound = () => {
                 }/>
             <img src={mouth} alt='logo' id='img1' className='parts' onClick={() => {
               if(count > 0){
-              if((count+1)%5 == 0){
+              if((count+1)%500 == 0){
                 setsyrCount(syrCount + 4)
                
               }
