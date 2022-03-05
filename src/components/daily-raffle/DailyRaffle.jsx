@@ -356,7 +356,7 @@ const onSound = () => {
             {account ?
               <>
                 <h3>Enter Your Discord id</h3>
-                <input type='text' type="text" onChange={inputadd} placeholder='user#2232' />
+                <input type='text'  onChange={inputadd} placeholder='user#2232' />
                 <button onClick={dsicordenterance}>Submit</button></>
               :
               <>
@@ -383,7 +383,7 @@ const onSound = () => {
         <div className='top-bar'>
           <div className='d-flex justify-content-center justify-content-md-start flex-column'>
             <div className='balance' data-aos='fade'>
-              <img src={syrup} alt='syrup' className='img-fluid ms-2' />
+              <img src='https://media.discordapp.net/attachments/937551194837110804/943235118775042149/unknown.png' alt='syrup' id = 'syrup' className='img-fluid ms-2' />
             
 
     {syrCount}
