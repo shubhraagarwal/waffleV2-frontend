@@ -1,24 +1,20 @@
-
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import ReactCanvasConfetti from "react-canvas-confetti";
-import './DailyRaffle.scss';
-import logo from '../../assets/logo.png';
-import syrup from '../../assets/syrup.png';
-import face from '../../assets/face.png';
-import eyes from '../../assets/eyes2.png';
-import mouth from '../../assets/mouth.png';
-import axios from "axios";
-import { toast } from "react-toastify";
-import { API_URL } from "../../utils/ApiURL";
-import CountDownBar from '../countdown-bar/CountDownBar';
 // import ParallaxMousemove from 'react-parallax-mousemove';
 import { useWeb3React } from "@web3-react/core";
-import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import ReactCanvasConfetti from "react-canvas-confetti";
 // import JoinDiscord from '../modal/JoinDiscord';
 import close from '../../assets/close.svg';
-import { number } from 'yup';
+import audio from '../../assets/confetti sound.mp3';
+import eyes from '../../assets/eyes2.png';
+import face from '../../assets/face.png';
+import logo from '../../assets/logo.png';
+import mouth from '../../assets/mouth.png';
+import useAuth from "../../hooks/useAuth";
+import { API_URL } from "../../utils/ApiURL";
+import CountDownBar from '../countdown-bar/CountDownBar';
 import WhiteList from '../whitelist/WhiteList';
-import audio from '../../assets/confetti sound.mp3'
+import './DailyRaffle.scss';
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -133,7 +129,7 @@ const onSound = () => {
     }
     // console.log("dsaf", typeof diff)
     // if (typeof diff == number) {
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var days = Math.floor((diff / (1000 * 60 * 60 * 24)));
     var hours = Math.floor(diff / (1000 * 60 * 60));
     var mins = Math.floor(diff / (1000 * 60));
     var secs = Math.floor(diff / 1000);
@@ -223,23 +219,25 @@ const onSound = () => {
 
   const adduser = () => {
     // setOpens(true)
-    axios.post(`${API_URL}/v1/users/addUser`, { walletAddress: account })
-      .then((response) => {
-        // console.log("lotetry", response)
-        window.location.reload();
-      })
-      .catch((err) => {
-        // setOpens(false)
-        // toast.warning('Error While getting user Lottery', {
-        //   position: "top-right",
-        //   autoClose: 3000,
-        // });
-        return false;
-      })
+    console.log(account);
+    localStorage.setItem("wallet" , account)
+    // axios.post(`http://localhost:1337/v1/users/addUser`, { walletAddress: account })
+    //   .then((response) => {
+    //     // console.log("lotetry", response)
+    //     window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     // setOpens(false)
+    //     // toast.warning('Error While getting user Lottery', {
+    //     //   position: "top-right",
+    //     //   autoClose: 3000,
+    //     // });
+    //     return false;
+    //   })
   }
   const getuser = () => {
     // setOpens(true)
-    axios.post(`${API_URL}/v1/users/getUser`, { walletAddress: account })
+    axios.post(`http://localhost:1337/api/v1/users/getUser`, { walletAddress: account })
       .then((response) => {
         setsyrup(response.data.user)
         setcount(response.data.user.waffleCount)
@@ -257,10 +255,11 @@ const onSound = () => {
   }
   const getallwinner = () => {
     // setOpens(true)
-    axios.get(`${API_URL}/v1/users/getAllWinner`)
+    axios.get(`http://localhost:1337/api/v1/users/getAllWinner`)
       .then((response) => {
         // console.log("get all user", response)
         // setallusers(response.data.data)
+        console.log(response.data);
         setwinner(response.data.data)
       })
       .catch((err) => {
@@ -310,25 +309,26 @@ const onSound = () => {
 
   const dsicordenterance = () => {
     // setOpens(true)
-    axios.post(`${API_URL}/v1/users/addDiscordId`, { walletAddress: account, discordId: discordid })
-      .then((response) => {
-        // setsyrup(response.data.user)
-        setShowModal(false);
-        getuser();
-        toast.success('Successfully Added Discord ID', {
-          position: "top-right",
-          autoClose: 8000,
-        });
-        // console.log("getuser", response)
-      })
-      .catch((err) => {
-        // setOpens(false)
-        toast.warning('Error While adding lottery', {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        return false;
-      })
+    localStorage.setItem('discord_id' , discordid)
+    // axios.post(`${API_URL}/v1/users/addDiscordId`, { walletAddress: account, discordId: discordid })
+    //   .then((response) => {
+    //     // setsyrup(response.data.user)
+    //     setShowModal(false);
+    //     getuser();
+    //     toast.success('Successfully Added Discord ID', {
+    //       position: "top-right",
+    //       autoClose: 8000,
+    //     });
+    //     // console.log("getuser", response)
+    //   })
+    //   .catch((err) => {
+    //     // setOpens(false)
+    //     toast.warning('Error While adding lottery', {
+    //       position: "top-right",
+    //       autoClose: 3000,
+    //     });
+    //     return false;
+    //   })
   }
 
 
