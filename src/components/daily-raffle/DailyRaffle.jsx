@@ -172,7 +172,7 @@ const onSound = () => {
       // setcount(count + 1)
     }
     if (count == syrup?.initialcount) {
-      axios.post(`${API_URL}/v1/users/addViewsOfWaffleCount`, { walletAddress: account, enteryTime: t })
+      axios.post(`${API_URL}/api/v1/users/addViewsOfWaffleCount`, { walletAddress: account, enteryTime: t })
         .then((response) => {
           // setOpens(false)
           window.location.reload();
@@ -238,7 +238,7 @@ const onSound = () => {
   }
   const getuser = () => {
     // setOpens(true)
-    axios.post(`http://localhost:1337/api/v1/users/getUser`, { walletAddress: account })
+    axios.post(`${API_URL}/api/v1/users/getUser`, { walletAddress: account })
       .then((response) => {
         setsyrup(response.data.user)
         setcount(response.data.user.waffleCount)
@@ -256,7 +256,7 @@ const onSound = () => {
   }
   const getallwinner = () => {
     // setOpens(true)
-    axios.get(`http://localhost:1337/api/v1/users/getAllWinner`)
+    axios.get(`${API_URL}/api/v1/users/getAllWinner`)
       .then((response) => {
         // console.log("get all user", response)
         // setallusers(response.data.data)
