@@ -1,9 +1,9 @@
-@import '../../styles/mixins';
-@import '../../styles/variables';
+@import "../../styles/mixins";
+@import "../../styles/variables";
 
 .white-list {
-  .dufhudfh{
-    background: red!important;
+  .dufhudfh {
+    background: red !important;
   }
   color: #ffffff;
   h2 {
@@ -37,6 +37,9 @@
       );
       box-shadow: 4px 4px 0px #fe4459;
     }
+  }
+  .disabled {
+    cursor: not-allowed;
   }
   .data-table {
     h3 {
@@ -91,33 +94,31 @@
   }
 }
 
-iframe{
+iframe {
   display: none;
-  position: unset!important;
-  top: 0px!important;
-  left: 0px!important;
-  width: 0px!important;
-  height: 0px!important;
+  position: unset !important;
+  top: 0px !important;
+  left: 0px !important;
+  width: 0px !important;
+  height: 0px !important;
 }
 
-
-iframe{
+iframe {
   display: none;
-  position: unset!important;
-  top: 0px!important;
-  left: 0px!important;
-  width: 0px!important;
-  height: 0px!important;
+  position: unset !important;
+  top: 0px !important;
+  left: 0px !important;
+  width: 0px !important;
+  height: 0px !important;
 }
 
-
-.timmernew{
+.timmernew {
   display: flex;
   margin-bottom: 50px;
-  .ho{
+  .ho {
     margin-right: 20px;
     text-align: center;
-    h4{
+    h4 {
       color: #ffffff;
       font-size: 36px;
     }

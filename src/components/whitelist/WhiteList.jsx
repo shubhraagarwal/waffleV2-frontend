@@ -81,7 +81,6 @@ const WhiteList = (props) => {
   // console.log("new epoc time",newTime)
   let now = new Date(wintime);
   let tttt = now.setDate(now.getDate() + 1);
-  console.log("epoc time ", tttt);
   // const d = new Date(epochTime);
   // const t = (d.getTime() + 43200000);
 
@@ -128,7 +127,7 @@ const WhiteList = (props) => {
       .then((response) => {
         // setsyrup(response.data.user)
         getuser();
-        window.location.reload();
+        // window.location.reload();
         // console.log("getuser", response)
       })
       .catch((err) => {
@@ -154,12 +153,14 @@ const WhiteList = (props) => {
       {/* {showModal && <JoinDiscord setdiscordid={setdiscordid} dsicordenterance={dsicordenterance} handleModalClose={handleModalClose} />} */}
       <div className="container">
         <h2>want to Enter in Whitelist Raffle?</h2>
-        <p>This will cost you 1 syrup</p>
+        <p>This will cost you 8 syrup</p>
         <p>Want to continue???</p>
         {syrupp?.syrupQuantity > 4 && syrupp?.syrupQuantity <= 8 ? (
           <button
             className={
-              syrupp?.discordAdded === true ? "wl-btn success" : "wl-btn enter"
+              syrupp?.discordAdded === true
+                ? "wl-btn success disabled"
+                : "wl-btn enter"
             }
             onClick={submitdiscordid}
           >
@@ -168,7 +169,10 @@ const WhiteList = (props) => {
               : "Enter in WL Raffle"}
           </button>
         ) : (
-          <button className="wl-btn enter dufhudfh" onClick={props.fun}>
+          <button
+            className="wl-btn enter dufhudfh disabled"
+            onClick={props.fun}
+          >
             Complete 8 Syrup Target First
           </button>
         )}

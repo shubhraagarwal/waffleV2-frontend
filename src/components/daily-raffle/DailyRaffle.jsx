@@ -390,7 +390,7 @@ const DailyRaffle = () => {
 
                 {syrCount}
               </div>
-              <CountDownBar hour={hour} min={min} sec={sec} />
+              <CountDownBar />
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (
