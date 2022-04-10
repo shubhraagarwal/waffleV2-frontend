@@ -5,5 +5,5 @@
 // export const API_URL = 'http://192.168.18.48:3000'
  export const API_URL = 'https://waffleapi.herokuapp.com'
  export const API_URL_RAFFLE = 'https://waffleapi.herokuapp.com'
-//export const API_URL = 'http://localhost:1337'
+//export const API_URL_RAFFLE = 'http://localhost:1337'
 // export const API_URL = 'http://192.168.18.10:3005'

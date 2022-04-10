@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import JoinDiscord from '../modal/JoinDiscord';
-import './WhiteList.scss';
-import axios from "axios";
-import { API_URL } from "../../utils/ApiURL";
 import { useWeb3React } from "@web3-react/core";
-import { set } from 'lodash';
-import DailyRaffle from '../daily-raffle/DailyRaffle';
+import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { API_URL } from "../../utils/ApiURL";
+import './WhiteList.scss';
 
 
 const WhiteList = (props) => {
@@ -178,7 +175,7 @@ const WhiteList = (props) => {
         <h2>want to Enter in Whitelist Raffle?</h2>
         <p>This will cost you 1 syrup</p>
         <p>Want to continue???</p>
-        {syrupp?.syrupQuantity > 4 && syrupp?.syrupQuantity <= 8 ?
+        {syrupp?.syrupQuantity > 8 && syrupp?.syrupQuantity <= 8 ?
           <button
             className={syrupp?.discordAdded === true ? 'wl-btn success' : 'wl-btn enter'}
             onClick={submitdiscordid}

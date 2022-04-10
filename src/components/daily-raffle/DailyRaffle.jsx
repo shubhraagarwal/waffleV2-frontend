@@ -71,7 +71,7 @@ const DailyRaffle = () => {
   
   const [bounce, setBounce] = useState(0);
   const [lastClick, setLastClick] = useState(0);
-  const [syrup, setsyrup] = useState(0);
+  const [syrup, setsyrup] = useState(8);
   const [count, setcount] = useState(0);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
@@ -172,7 +172,11 @@ const onSound = () => {
       // setcount(count + 1)
     }
     if (count == syrup?.initialcount) {
-      axios.post(`${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`, { walletAddress: account, enteryTime: t })
+      axios.post(`${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`, { walletAddress: account, enteryTime: t }, {
+        headers : {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
         .then((response) => {
           // setOpens(false)
           window.location.reload();
@@ -222,24 +226,34 @@ const onSound = () => {
     // setOpens(true)
     console.log(account);
     localStorage.setItem("wallet" , account)
-    // axios.post(`http://localhost:1337/v1/users/addUser`, { walletAddress: account })
-    //   .then((response) => {
-    //     // console.log("lotetry", response)
-    //     window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //     // setOpens(false)
-    //     // toast.warning('Error While getting user Lottery', {
-    //     //   position: "top-right",
-    //     //   autoClose: 3000,
-    //     // });
-    //     return false;
-    //   })
+    axios.post(`${API_URL_RAFFLE}/api/v1/users/addUser`, { walletAddress: account },{
+      headers : {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
+      .then((response) => {
+        console.log("added");
+        // console.log("lotetry", response)
+        //window.location.reload();
+      })
+      .catch((err) => {
+        // setOpens(false)
+        // toast.warning('Error While getting user Lottery', {
+        //   position: "top-right",
+        //   autoClose: 3000,
+        // });
+        return false;
+      })
   }
   const getuser = () => {
     // setOpens(true)
-    axios.post(`${API_URL_RAFFLE}/api/v1/users/getUser`, { walletAddress: account })
+    axios.post(`${API_URL_RAFFLE}/api/v1/users/getUser`, { walletAddress: account } , {
+      headers : {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
       .then((response) => {
+        console.log(response.data[syrup]);
         setsyrup(response.data.user)
         setcount(response.data.user.waffleCount)
         // console.log("count database")
@@ -256,7 +270,9 @@ const onSound = () => {
   }
   const getallwinner = () => {
     // setOpens(true)
-    axios.get(`${API_URL_RAFFLE}/api/v1/users/getAllWinner`)
+    axios.get(`${API_URL_RAFFLE}/api/v1/users/getAllWinner` , {
+      'Access-Control-Allow-Origin': '*'
+    })
       .then((response) => {
         // console.log("get all user", response)
         // setallusers(response.data.data)
