@@ -21,7 +21,7 @@ const canvasStyles = {
   width: "100%",
   height: "100%",
   top: 0,
-  left: 0
+  left: 0,
 };
 
 const DailyRaffle = () => {
@@ -36,39 +36,39 @@ const DailyRaffle = () => {
       refAnimationInstance.current({
         ...opts,
         origin: { y: 0.7 },
-        particleCount: Math.floor(200 * particleRatio)
+        particleCount: Math.floor(200 * particleRatio),
       });
   }, []);
   const fire = useCallback(() => {
     makeShot(0.25, {
       spread: 26,
-      startVelocity: 55
+      startVelocity: 55,
     });
 
     makeShot(0.2, {
-      spread: 60
+      spread: 60,
     });
 
     makeShot(0.35, {
       spread: 100,
       decay: 0.91,
-      scalar: 0.8
+      scalar: 0.8,
     });
 
     makeShot(0.1, {
       spread: 120,
       startVelocity: 25,
       decay: 0.92,
-      scalar: 1.2
+      scalar: 1.2,
     });
 
     makeShot(0.1, {
       spread: 120,
-      startVelocity: 45
+      startVelocity: 45,
     });
   }, [makeShot]);
   // const [audio] = useState(new Audio({WaffleSound}));
-  
+
   const [bounce, setBounce] = useState(0);
   const [lastClick, setLastClick] = useState(0);
   const [syrup, setsyrup] = useState(8);
@@ -77,9 +77,9 @@ const DailyRaffle = () => {
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
   const [winner, setwinner] = useState([]);
-  const [whitelist, setwhitelist] = useState('');
+  const [whitelist, setwhitelist] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [discordid, setdiscordid] = useState('');
+  const [discordid, setdiscordid] = useState("");
   const [day, setDay] = useState(0);
   const [syrCount, setsyrCount] = useState(0);
   // const { Time } = PresaleStartEnd();
@@ -87,21 +87,16 @@ const DailyRaffle = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
 
-const syrupSub = () =>{
-  
-    if(syrCount > 0){
-  if(syrCount >= 8){
-    setsyrCount(syrCount - 8);
-  }
-}
-  
-  
-}
-const onSound = () => {
-  new Audio(audio).play();
-}
-  
-
+  const syrupSub = () => {
+    if (syrCount > 0) {
+      if (syrCount >= 8) {
+        setsyrCount(syrCount - 8);
+      }
+    }
+  };
+  const onSound = () => {
+    new Audio(audio).play();
+  };
 
   // let userwhitelist
   // const PromotedCoins = winner?.map((elem) => {
@@ -113,17 +108,17 @@ const onSound = () => {
   // console.log("account",account)
   // });
   // console.log("bbbbbbbbbbbbbbbbbbbbbbbbbb",winner[4].walletAddress)
-   var  userwhitelist = winner?.find(e => e?.walletAddress == account?.toLowerCase())
+  var userwhitelist = winner?.find(
+    (e) => e?.walletAddress == account?.toLowerCase()
+  );
   //  console.log("userwhitelist",userwhitelist?.walletAddress)
-
 
   // console.log("winners",winner?.walletAddress[0])
 
-
   function timer() {
-    var time = new Date(syrup?.enteryTime)
-    var now = new Date()
-    var diff = time.getTime() - now.getTime()
+    var time = new Date(syrup?.enteryTime);
+    var now = new Date();
+    var diff = time.getTime() - now.getTime();
     if (diff <= 0) {
       return;
     }
@@ -140,20 +135,20 @@ const onSound = () => {
     setDay(d);
     setHour(h);
     setMin(m);
-    setSec(s)
+    setSec(s);
     // }
   }
   setInterval(() => {
-    timer()
+    timer();
   }, 1000);
 
   // console.log("day", day)
 
   const handleClick = () => {
-    setBounce(bounce+1);
+    setBounce(bounce + 1);
     const d = new Date();
     const Nowtime = d.getTime();
-    const t = (d.getTime() + 500000);
+    const t = d.getTime() + 500000;
     // console.log("time",t)
     // console.log("time",t + 43200000)
 
@@ -169,6 +164,7 @@ const onSound = () => {
     // setLastClick(t);
     setcount(count + 1)
     if (syrup?.enteryTime < Nowtime) {
+
       // setcount(count + 1)
     }
     if (count == syrup?.initialcount) {
@@ -188,14 +184,12 @@ const onSound = () => {
           //   position: "top-right",
           //   autoClose: 3000,
           // });
-          console.log("error we get")
+          console.log("error we get");
           return false;
-        })
+        });
+    } else {
+      console.log("else");
     }
-    else {
-      console.log("else")
-    }
-
   };
   // console.log("counting",count)
   const mouseEnter = () => {
@@ -224,6 +218,7 @@ const onSound = () => {
 
   const adduser = () => {
     // setOpens(true)
+
     console.log(account);
     localStorage.setItem("wallet" , account)
     axios.post(`${API_URL_RAFFLE}/api/v1/users/addUser`, { walletAddress: account },{
@@ -231,6 +226,7 @@ const onSound = () => {
         'Access-Control-Allow-Origin': '*'
       }
     })
+
       .then((response) => {
         console.log("added");
         // console.log("lotetry", response)
@@ -243,10 +239,11 @@ const onSound = () => {
         //   autoClose: 3000,
         // });
         return false;
-      })
-  }
+      });
+  };
   const getuser = () => {
     // setOpens(true)
+
     axios.post(`${API_URL_RAFFLE}/api/v1/users/getUser`, { walletAddress: account } , {
       headers : {
         'Access-Control-Allow-Origin': '*'
@@ -256,6 +253,7 @@ const onSound = () => {
         console.log(response.data[syrup]);
         setsyrup(response.data.user)
         setcount(response.data.user.waffleCount)
+
         // console.log("count database")
         // console.log("coutn ===========", typeof response.data.user.waffleCount)
       })
@@ -266,10 +264,11 @@ const onSound = () => {
         //   autoClose: 3000,
         // });
         return false;
-      })
-  }
+      });
+  };
   const getallwinner = () => {
     // setOpens(true)
+
     axios.get(`${API_URL_RAFFLE}/api/v1/users/getAllWinner` , {
       'Access-Control-Allow-Origin': '*'
     })
@@ -278,6 +277,7 @@ const onSound = () => {
         // setallusers(response.data.data)
         console.log(response.data);
         setwinner(response.data.data)
+
       })
       .catch((err) => {
         // setOpens(false)
@@ -286,8 +286,8 @@ const onSound = () => {
         //   autoClose: 3000,
         // });
         return false;
-      })
-  }
+      });
+  };
 
   useEffect(() => {
     if (account) {
@@ -295,30 +295,27 @@ const onSound = () => {
       getuser();
       getallwinner();
     }
-     
   }, [account]);
 
   const inputadd = (e) => {
-    const value = e.target.value
-    setdiscordid(value)
+    const value = e.target.value;
+    setdiscordid(value);
   };
 
   const handleConnectmodal = () => {
     setShowModal(!showModal);
-  }
+  };
   // const handledisconnectmodal = () => {
   //   setShowModal(showModal);
   // }
 
   useEffect(() => {
-    
-    {syrup?.discordId == null ?
-      setShowModal(!showModal)
-      :
-      setShowModal(showModal)
+    {
+      syrup?.discordId === null
+        ? setShowModal(!showModal)
+        : setShowModal(showModal);
     }
   }, [syrup, account]);
-  
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -326,6 +323,7 @@ const onSound = () => {
 
   const dsicordenterance = () => {
     // setOpens(true)
+
     localStorage.setItem('discord_id' , discordid)
     // axios.post(`${API_URL}/v1/users/addDiscordId`, { walletAddress: account, discordId: discordid })
     //   .then((response) => {
@@ -349,140 +347,159 @@ const onSound = () => {
   }
 
 
-  
-
 
   return (
     <>
-    <section
-      className='container-fluid daily-raffle'
-      id='raffle'
-      onMouseEnter={mouseEnter}
-      onMouseLeave={mouseLeave}
-    >
-
-      {showModal &&
-        <div className='modal-container'>
-          <div className='content-wrapper'>
-            <img
-              src={close}
-              alt='close'
-              className='close'
-              onClick={handleModalClose}
-            />
-            {account ?
-              <>
-                <h3>Enter Your Discord id</h3>
-                <input type='text'  onChange={inputadd} placeholder='user#2232' />
-                <button onClick={dsicordenterance}>Submit</button></>
-              :
-              <>
-                <h3>Please Connect Metamask First</h3>
-                <button onClick={connectMetaMask}>Connect MetaMask</button>
-              </>
-            }
-          </div>
-        </div>
-      }
-
-     
-      <div className='countsclick'>
-      <div className='countsinner'>
-        <h3>{count == 0 ?
-          'WAFFLE CLICKER'
-          :
-          count
-        }</h3>
-      </div>
-    </div>
-
-      <div className='container text-center'>
-        <div className='top-bar'>
-          <div className='d-flex justify-content-center justify-content-md-start flex-column'>
-            <div className='balance' data-aos='fade'>
-              <img src='https://media.discordapp.net/attachments/937551194837110804/943235118775042149/unknown.png' alt='syrup' id = 'syrup' className='img-fluid ms-2' />
-            
-
-    {syrCount}
-          
+      <section
+        className="container-fluid daily-raffle"
+        id="raffle"
+        onMouseEnter={mouseEnter}
+        onMouseLeave={mouseLeave}
+      >
+        {showModal && (
+          <div className="modal-container">
+            <div className="content-wrapper">
+              <img
+                src={close}
+                alt="close"
+                className="close"
+                onClick={handleModalClose}
+              />
+              {account ? (
+                <>
+                  <h3>Enter Your Discord id</h3>
+                  <input
+                    type="text"
+                    onChange={inputadd}
+                    placeholder="user#2232"
+                  />
+                  <button onClick={dsicordenterance}>Submit</button>
+                </>
+              ) : (
+                <>
+                  <h3>Please Connect Metamask First</h3>
+                  <button onClick={connectMetaMask}>Connect MetaMask</button>
+                </>
+              )}
             </div>
-            <CountDownBar hour={hour} min={min} sec={sec} />
           </div>
-          <div className='d-flex justify-content-center justify-content-md-end flex-column'>
-            {account ? (
-              <button className='blue-gradient' onClick={connectMetaMask} data-aos='fade'>
-                <div className='connect'></div> Disconnect Wallet
-              </button>
-            ) : (
-              <button className='blue-gradient' onClick={handleConnectmodal} data-aos='fade'>
-                <div className='disconnect'></div> Connect Wallet
-              </button>
-            )}
-            { userwhitelist?.walletAddress &&
-              <div className='status success'>You are Whitelisted</div>
-            }
+        )}
+
+        <div className="countsclick">
+          <div className="countsinner">
+            <h3>{count === 0 ? "WAFFLE CLICKER" : count}</h3>
           </div>
         </div>
 
-        {/* raffle for pc  */}
-        <div className='mouse_move d-none d-xl-block'>
+        <div className="container text-center">
+          <div className="top-bar">
+            <div className="d-flex justify-content-center justify-content-md-start flex-column">
+              <div className="balance" data-aos="fade">
+                <img
+                  src="https://media.discordapp.net/attachments/937551194837110804/943235118775042149/unknown.png"
+                  alt="syrup"
+                  id="syrup"
+                  className="img-fluid ms-2"
+                />
 
-          <div
-            className='face-container'
-            onClick={handleClick}
-            onAnimationEnd={() => setBounce(0)}
-            bounce={bounce}
-          >
-          <div className="face-fig" onClick={() =>{
-            if(count>0){
-              if((count+1)%500 == 0){
-                setsyrCount(syrCount + 4)
-                fire();
-                onSound();
-              }
-              }
-            }}>
-            <img src={face} alt='logo' id='img1' value='5' onClick={() => {
-              if(count>0){
-            if((count+1)%500 == 0){
-              setsyrCount(syrCount + 4)
-            
-            }
-          }
-          }
-            }/>
-          
-            <img
-              src={eyes}
-              alt='logo'
-              id='img1'
-              className={inView ? 'mouse parts eyes' : 'parts eyes static'}
-              value='3'
-              onClick={() => {
-           if(count > 0) {  
-                if((count+1)%500 == 0){
-                  setsyrCount(syrCount + 4)
-                 
-                }
-              }
-              }
-                }/>
-            <img src={mouth} alt='logo' id='img1' className='parts' onClick={() => {
-              if(count > 0){
-              if((count+1)%500 == 0){
-                setsyrCount(syrCount + 4)
-               
-              }
-            }
-            }
-              }/>
+                {syrCount}
               </div>
-              <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
+              <CountDownBar />
+            </div>
+            <div className="d-flex justify-content-center justify-content-md-end flex-column">
+              {account ? (
+                <button
+                  className="blue-gradient"
+                  onClick={connectMetaMask}
+                  data-aos="fade"
+                >
+                  <div className="connect"></div> Disconnect Wallet
+                </button>
+              ) : (
+                <button
+                  className="blue-gradient"
+                  onClick={handleConnectmodal}
+                  data-aos="fade"
+                >
+                  <div className="disconnect"></div> Connect Wallet
+                </button>
+              )}
+              {userwhitelist?.walletAddress && (
+                <div className="status success">You are Whitelisted</div>
+              )}
+            </div>
           </div>
-        </div>
 
-       
-        {/* <div className='countsclick'>
+          {/* raffle for pc  */}
+          <div className="mouse_move d-none d-xl-block">
+            <div
+              className="face-container"
+              onClick={handleClick}
+              onAnimationEnd={() => setBounce(0)}
+              bounce={bounce}
+            >
+              <div
+                className="face-fig"
+                onClick={() => {
+                  if (count > 0) {
+                    if ((count + 1) % 500 === 0) {
+                      setsyrCount(syrCount + 4);
+                      fire();
+                      onSound();
+                    }
+                  }
+                }}
+              >
+                <img
+                  src={face}
+                  alt="logo"
+                  id="img1"
+                  value="5"
+                  onClick={() => {
+                    if (count > 0) {
+                      if ((count + 1) % 500 === 0) {
+                        setsyrCount(syrCount + 4);
+                      }
+                    }
+                  }}
+                />
+
+                <img
+                  src={eyes}
+                  alt="logo"
+                  id="img1"
+                  className={inView ? "mouse parts eyes" : "parts eyes static"}
+                  value="3"
+                  onClick={() => {
+                    if (count > 0) {
+                      if ((count + 1) % 500 === 0) {
+                        setsyrCount(syrCount + 4);
+                      }
+                    }
+                  }}
+                />
+                <img
+                  src={mouth}
+                  alt="logo"
+                  id="img1"
+                  className="parts"
+                  onClick={() => {
+                    if (count > 0) {
+                      if ((count + 1) % 500 === 0) {
+                        setsyrCount(syrCount + 4);
+                      }
+                    }
+                  }}
+                />
+              </div>
+              <ReactCanvasConfetti
+                refConfetti={getInstance}
+                style={canvasStyles}
+              />
+            </div>
+          </div>
+
+          {/* <div className='countsclick'>
           <div className='countsinner'>
             <h3>{count == 0 ?
               ''
@@ -491,21 +508,20 @@ const onSound = () => {
             }</h3>
           </div>
         </div> */}
-        {/* raffle for mobile  */}
-        <div className='d-xl-none'>
-          <img
-            src={logo}
-            alt='logo'
-            className='mob-face img-fluid'
-            onClick={handleClick}
-            onAnimationEnd={() => setBounce(0)}
-            bounce={bounce}
-          />
+          {/* raffle for mobile  */}
+          <div className="d-xl-none">
+            <img
+              src={logo}
+              alt="logo"
+              className="mob-face img-fluid"
+              onClick={handleClick}
+              onAnimationEnd={() => setBounce(0)}
+              bounce={bounce}
+            />
+          </div>
         </div>
-      </div>
-    
-    </section>
-    <WhiteList  fun = {syrupSub}/>
+      </section>
+      <WhiteList fun={syrupSub} />
     </>
   );
 };
