@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import "./WhiteList.scss";
-
+import Winner from '../winner/Winner'
 
 
 const WhiteList = (props) => {
@@ -15,6 +15,7 @@ const WhiteList = (props) => {
   const [winner, setwinner] = useState([]);
   const [wintime, setwintime] = useState("");
   let temp = [];
+  let winr = [];
 
   // console.log('winnetime',wintime)
   console.log("discord syrup", syrupp);
@@ -71,11 +72,14 @@ const WhiteList = (props) => {
   // };
   const getallwinner = () => {
     axios
-      .get(`${API_URL}/api/v1/users/getAllWinner`)
+      .get(`${API_URL}/api/v1/users/getAllWinner`, {
+        "Access-Control-Allow-Origin": "*",
+      })
       .then((response) => {
-        setwinner(response.data.data);
-        setwintime(response.data.data[0].winnerTime);
-        console.log(winner)
+        console.log(response.data);
+        winr.push(response.data[0], response.data[1], response.data[2] , response.data[3] , response.data[4] , response.data[5] , response.data[6] , response.data[7] , response.data[8] , response.data[9]  )
+        setwinner(winr)
+        console.log(winr);
       })
       .catch((err) => {
         return false;
@@ -175,9 +179,10 @@ const WhiteList = (props) => {
               </ol>
             </div>
           </div>
-          <div className="col-12 col-md-6">
+          <div className="winText col-12 col-md-6">
             {/* we can make a component here which will render this message when null and winners list otherwise */}
-            winners are feclared here
+            Congratulations To Today's winners 🥳🥳 <br/>
+                {winner && <Winner props={winner} />}
             
           </div>
         </div>
