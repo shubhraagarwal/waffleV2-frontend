@@ -2,40 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./CountDownBar.scss";
 import axios from "axios";
 import { useWeb3React } from "@web3-react/core";
-import { API_URL } from "../../utils/ApiURL";
+import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import moment from "moment";
 
-const CountDownBar = () => {
-  const account = useWeb3React();
-  const [entryTime, setEntryTime] = useState();
+const CountDownBar = ({ entryTime }) => {
   const [hour, setHours] = useState();
   const [minute, setMinutes] = useState();
   const [second, setSeconds] = useState();
-
-  useEffect(() => {
-    axios
-      .post(`${API_URL}/v1/users/getUser`, { walletAddress: account })
-      .then((response) => {
-        setEntryTime(response.data.user.enteryTime);
-        console.log("first");
-      })
-      .then(() => {
-        const reCallAt = moment(entryTime).add(12, "hours");
-        const then = moment(reCallAt, "LLLL");
-        const now = moment();
-        const hours = then.diff(now, "hours");
-        const minutes = then.diff(now, "minutes") % 60;
-        const seconds = then.diff(now, "seconds") % 3600;
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
-
-        console.log(hours, minutes, seconds, "sAAAAAAAAAAAAAAAAAAAAAAAAa");
-      })
-      .catch((err) => {
-        return false;
-      });
-  });
 
   return (
     <div className="countdown-bar">
