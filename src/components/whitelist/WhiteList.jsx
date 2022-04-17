@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import "./WhiteList.scss";
 
+
+
 const WhiteList = (props) => {
   const [whiteListed, setWhiteListed] = useState(false);
 
@@ -12,6 +14,7 @@ const WhiteList = (props) => {
   const [allusers, setallusers] = useState([]);
   const [winner, setwinner] = useState([]);
   const [wintime, setwintime] = useState("");
+  let temp = [];
 
   // console.log('winnetime',wintime)
   console.log("discord syrup", syrupp);
@@ -31,9 +34,22 @@ const WhiteList = (props) => {
         }
       )
       .then((response) => {
+        console.log(response.data[0]); 
         console.log(response.data, "Asdfsah.k");
-        setsyrupp(response.data[0].syrups);
-        setDiscord(response.data[0].discord);
+        console.log(Object.values(response.data[0]));
+        let res = Object.values(response.data[0])
+        
+        setsyrupp(res[4]);
+        console.log(res);
+
+        console.log(res[3]);
+        
+        setDiscord(res[3]);
+        console.log(discord);
+
+        
+        temp.push(res[0],res[1],res[2],res[3], res[4], res[5], res[6] );
+        console.log(temp);
       })
       .catch((err) => {
         console.log(err, "err inside getUser");
@@ -59,6 +75,7 @@ const WhiteList = (props) => {
       .then((response) => {
         setwinner(response.data.data);
         setwintime(response.data.data[0].winnerTime);
+        console.log(winner)
       })
       .catch((err) => {
         return false;
@@ -98,11 +115,12 @@ const WhiteList = (props) => {
 
   const enterRaffle = () => {
     // setOpens(true)
+    console.log(discord);
     axios
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
-        walletAddress: account,
-        discord_id: discord,
-        syrups: syrupp
+        walletAddress: temp[2],
+        discord_id: temp[3],
+        syrups: temp[4]
       })
       .then((response) => {
         console.log(response, ":asdfhjasdfhjk");
@@ -115,8 +133,9 @@ const WhiteList = (props) => {
 
   useEffect(() => {
  //   getalldiscorddasta();
+    getallwinner();   
     getuser();
-    getallwinner();
+        
   }, [account]);
 
   // console.log("statys we get here",syrupp?.discordAdded)
@@ -158,7 +177,8 @@ const WhiteList = (props) => {
           </div>
           <div className="col-12 col-md-6">
             {/* we can make a component here which will render this message when null and winners list otherwise */}
-            New Winners Will be Announced at 00:00 AM UTC
+            winners are feclared here
+            
           </div>
         </div>
       </div>
