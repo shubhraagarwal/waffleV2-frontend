@@ -41,17 +41,18 @@ const WhiteList = (props) => {
       });
   };
 
-  const getalldiscorddasta = () => {
-    // setOpens(true)
-    axios
-      .get(`${API_URL}/api/v1/users/getAllUsers`)
-      .then((response) => {
-        setallusers(response.data.data);
-      })
-      .catch((err) => {
-        return false;
-      });
-  };
+  // // didnt got it
+  // const getalldiscorddasta = () => {
+  //   // setOpens(true)
+  //   axios
+  //     .get(`${API_URL}/api/v1/users/getAllUsers`) 
+  //     .then((response) => {
+  //       setallusers(response.data.data);
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // };
   const getallwinner = () => {
     axios
       .get(`${API_URL}/api/v1/users/getAllWinner`)
@@ -100,6 +101,8 @@ const WhiteList = (props) => {
     axios
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
         walletAddress: account,
+        discord_id: discord,
+        syrups: syrupp
       })
       .then((response) => {
         console.log(response, ":asdfhjasdfhjk");
@@ -111,7 +114,7 @@ const WhiteList = (props) => {
   };
 
   useEffect(() => {
-    getalldiscorddasta();
+ //   getalldiscorddasta();
     getuser();
     getallwinner();
   }, [account]);
@@ -154,6 +157,7 @@ const WhiteList = (props) => {
             </div>
           </div>
           <div className="col-12 col-md-6">
+            {/* we can make a component here which will render this message when null and winners list otherwise */}
             New Winners Will be Announced at 00:00 AM UTC
           </div>
         </div>

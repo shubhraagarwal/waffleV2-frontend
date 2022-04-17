@@ -282,7 +282,7 @@ const DailyRaffle = () => {
     axios
       .post(`${API_URL_RAFFLE}/api/v1/users/addDiscordId`, {
         walletAddress: account,
-        discordId: discordid,
+        discordid: discordid,
       })
       .then((response) => {
         // setsyrup(response.data.user)
