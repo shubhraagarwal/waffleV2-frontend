@@ -87,6 +87,8 @@ const DailyRaffle = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
 
+  let temp = []
+  let winr = []
   const syrupSub = () => {
     if (syrCount > 0) {
       if (syrCount >= 8) {
@@ -212,8 +214,13 @@ const DailyRaffle = () => {
         }
       )
       .then((response) => {
-        setsyrCount(response.data[0].syrups);
-        setEntryTime(response.data[0].entryTime);
+        let res = Object.values(response.data[0])
+        console.log(res);
+
+        setsyrCount(res[4]);
+        setEntryTime(res[0]);
+        temp.push(res[0],res[1],res[2],res[3], res[4], res[5], res[6] );
+        
       })
       .catch((err) => {
         console.log(err, "err inside getUser");
@@ -231,7 +238,9 @@ const DailyRaffle = () => {
         // console.log("get all user", response)
         // setallusers(response.data.data)
         console.log(response.data);
-        setwinner(response.data.data);
+        
+        winr.push(response.data[0], response.data[1], response.data[2] , response.data[3] , response.data[4] , response.data[5] , response.data[6] , response.data[7] , response.data[8] , response.data[9]  )
+        setwinner(winr);
       })
       .catch((err) => {
         // setOpens(false)
@@ -282,7 +291,7 @@ const DailyRaffle = () => {
     axios
       .post(`${API_URL_RAFFLE}/api/v1/users/addDiscordId`, {
         walletAddress: account,
-        discordId: discordid,
+        discordid: discordid,
       })
       .then((response) => {
         // setsyrup(response.data.user)
