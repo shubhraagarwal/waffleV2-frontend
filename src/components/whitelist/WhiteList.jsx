@@ -124,7 +124,7 @@ const WhiteList = (props) => {
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
         walletAddress: temp[2],
         discord_id: temp[3],
-        syrups: temp[4]
+        syrups: (temp[4] - 8)
       })
       .then((response) => {
         console.log(response, ":asdfhjasdfhjk");
