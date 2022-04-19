@@ -132,12 +132,13 @@ const DailyRaffle = () => {
     const d = new Date();
     const t = d.getTime() + 500000;
     setcount(count + 1);
-    if (count === 500) {
+    console.log("clicked", t);
+    if (count >= 500) {
       console.log(t);
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
-          { walletAddress: account, enteryTime: t },
+          { walletAddress: account, entryTime: t },
           {
             headers: {
               "Access-Control-Allow-Origin": "*",
@@ -147,7 +148,7 @@ const DailyRaffle = () => {
         .then((response) => {
           getuser();
           console.log(response);
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((err) => {
           console.log("error we get");
