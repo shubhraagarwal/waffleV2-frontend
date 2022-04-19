@@ -5,39 +5,48 @@ import { useWeb3React } from "@web3-react/core";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import moment from "moment";
 
-const CountDownBar = ({ entryTime }) => {
+const CountDownBar = ( entryTime ) => {
   const [hour, setHours] = useState(null);
   const [minute, setMinutes] = useState(null);
   const [second, setSeconds] = useState(null);
   const [secnd, setSecnd] = useState(0);
-
+  console.log(JSON.stringify(entryTime.data));
   // console.log(entryTime);
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
-      setSecnd((secnd) => secnd + 1);
+      setSecnd(secnd => secnd + 1);
+      console.log(entryTime + " yeh ENTRY TIME HAI countDOWN KA");
+      let ts = Date.now()
+      console.log(ts);
+      ts= ts/1000;
+      entryTime =entryTime/1000
+      ts = Math.floor(ts)
+      entryTime = Math.floor(entryTime)
+      console.log(ts);
+      //entryTime = 1650374709 + 10000
+      if(( ts - entryTime) < 43200){
 
-      let ts = Date.now();
+        let res =  entryTime - ts;
+        console.log(res);
+        let resHours = Math.round(res/(60*60))
+        setHours(hour => resHours)
+        res = res%(3600);
+        let resMins = Math.round(res/(60));
+        setMinutes(minute => resMins)
+        res = res%60;
+        console.log(res);
+        setSeconds(second => res)
 
-      ts = ts / 1000;
-      ts = Math.floor(ts);
-      // console.log(ts);
+      }else{
 
-      if (ts - entryTime > 43200) {
-        setHours((hour) => 0);
-        setMinutes((minute) => 0);
-        setSeconds((second) => 0);
-      } else {
-        let res = ts - entryTime;
+        setHours(hour => 0)
+        setMinutes(minute => 0)
+        setSeconds( second => 0)
 
-        let resHours = Math.round(res / (60 * 60));
-        setHours((hour) => resHours);
-        res = res % 3600;
-        let resMins = Math.round(res / 60);
-        setMinutes((minute) => resMins);
-        res = res % 60;
-        setSeconds((second) => res);
       }
+
+
     }, 1000);
     return () => clearInterval(interval);
   }, []);

@@ -16,6 +16,7 @@ import CountDownBar from "../countdown-bar/CountDownBar";
 import WhiteList from "../whitelist/WhiteList";
 import "./DailyRaffle.scss";
 import { toast } from "react-toastify";
+import { date } from "yup";
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -71,7 +72,7 @@ const DailyRaffle = () => {
   // const [audio] = useState(new Audio({WaffleSound}));
 
   const [bounce, setBounce] = useState(0);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(498);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
@@ -131,10 +132,12 @@ const DailyRaffle = () => {
     setBounce(bounce + 1);
     const d = new Date();
     const t = d.getTime() + 500000;
+    //let tts = date.now()
     setcount(count + 1);
+    console.log(entryTime+ " YEH entry time hai handle click ka");
     console.log("clicked", t);
     if (count >= 500) {
-      console.log(t);
+      
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
@@ -147,8 +150,12 @@ const DailyRaffle = () => {
         )
         .then((response) => {
           getuser();
-          console.log(response);
-          window.location.reload();
+          console.log(response.data.status);
+          if(response.data.status === "Failed"){
+
+          }else{
+            window.location.reload();
+          }
         })
         .catch((err) => {
           console.log("error we get");
@@ -218,6 +225,7 @@ const DailyRaffle = () => {
 
         setsyrCount(res[3]);
         setEntryTime(res[5]);
+        console.log(res[5] + " YEH ENTRY TIME HAI DAILY RAFFLE KA" );
         temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
@@ -379,7 +387,7 @@ const DailyRaffle = () => {
 
                 {syrCount}
               </div>
-              <CountDownBar entryTime={entryTime} />
+              <CountDownBar data={entryTime} />
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (
