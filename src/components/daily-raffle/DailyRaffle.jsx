@@ -71,7 +71,7 @@ const DailyRaffle = () => {
   // const [audio] = useState(new Audio({WaffleSound}));
 
   const [bounce, setBounce] = useState(0);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(498);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
@@ -87,8 +87,8 @@ const DailyRaffle = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
 
-  let temp = []
-  let winr = []
+  let temp = [];
+  let winr = [];
   const syrupSub = () => {
     if (syrCount > 0) {
       if (syrCount >= 8) {
@@ -130,13 +130,10 @@ const DailyRaffle = () => {
   const handleClick = () => {
     setBounce(bounce + 1);
     const d = new Date();
-    const Nowtime = d.getTime();
     const t = d.getTime() + 500000;
     setcount(count + 1);
-    if (syrCount?.enteryTime < Nowtime) {
-      // setcount(count + 1)
-    }
-    if (count === syrCount?.initialcount) {
+    if (count === 500) {
+      console.log(t);
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
@@ -148,8 +145,9 @@ const DailyRaffle = () => {
           }
         )
         .then((response) => {
-          window.location.reload();
           getuser();
+          console.log(response);
+          // window.location.reload();
         })
         .catch((err) => {
           console.log("error we get");
@@ -214,13 +212,12 @@ const DailyRaffle = () => {
         }
       )
       .then((response) => {
-        let res = Object.values(response.data[0])
+        let res = Object.values(response.data[0]);
         console.log(res);
 
         setsyrCount(res[3]);
         setEntryTime(res[5]);
-        temp.push(res[0],res[1],res[2],res[3], res[4], res[5], res[6] );
-        
+        temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
         console.log(err, "err inside getUser");
@@ -238,8 +235,19 @@ const DailyRaffle = () => {
         // console.log("get all user", response)
         // setallusers(response.data.data)
         console.log(response.data);
-        
-        winr.push(response.data[0], response.data[1], response.data[2] , response.data[3] , response.data[4] , response.data[5] , response.data[6] , response.data[7] , response.data[8] , response.data[9]  )
+
+        winr.push(
+          response.data[0],
+          response.data[1],
+          response.data[2],
+          response.data[3],
+          response.data[4],
+          response.data[5],
+          response.data[6],
+          response.data[7],
+          response.data[8],
+          response.data[9]
+        );
         setwinner(winr);
       })
       .catch((err) => {

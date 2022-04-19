@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import "./WhiteList.scss";
-import Winner from '../winner/Winner'
-
+import Winner from "../winner/Winner";
+import { toast } from "react-toastify";
 
 const WhiteList = (props) => {
   const [whiteListed, setWhiteListed] = useState(false);
@@ -35,21 +35,20 @@ const WhiteList = (props) => {
         }
       )
       .then((response) => {
-        console.log(response.data[0]); 
+        console.log(response.data[0]);
         console.log(response.data, "Asdfsah.k");
         console.log(Object.values(response.data[0]));
-        let res = Object.values(response.data[0])
-        
+        let res = Object.values(response.data[0]);
+
         setsyrupp(res[3]);
         console.log(res);
 
         console.log(res[3]);
-        
+
         setDiscord(res[2]);
         console.log(discord);
 
-        
-        temp.push(res[0],res[1],res[2],res[3], res[4], res[5], res[6] );
+        temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
         console.log(temp);
       })
       .catch((err) => {
@@ -62,7 +61,7 @@ const WhiteList = (props) => {
   // const getalldiscorddasta = () => {
   //   // setOpens(true)
   //   axios
-  //     .get(`${API_URL}/api/v1/users/getAllUsers`) 
+  //     .get(`${API_URL}/api/v1/users/getAllUsers`)
   //     .then((response) => {
   //       setallusers(response.data.data);
   //     })
@@ -77,8 +76,19 @@ const WhiteList = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        winr.push(response.data[0], response.data[1], response.data[2] , response.data[3] , response.data[4] , response.data[5] , response.data[6] , response.data[7] , response.data[8] , response.data[9]  )
-        setwinner(winr)
+        winr.push(
+          response.data[0],
+          response.data[1],
+          response.data[2],
+          response.data[3],
+          response.data[4],
+          response.data[5],
+          response.data[6],
+          response.data[7],
+          response.data[8],
+          response.data[9]
+        );
+        setwinner(winr);
         console.log(winr);
       })
       .catch((err) => {
@@ -124,10 +134,17 @@ const WhiteList = (props) => {
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
         walletAddress: temp[2],
         discord_id: temp[3],
-        syrups: (temp[4] - 8)
+        syrups: temp[4] - 8,
       })
       .then((response) => {
-        console.log(response, ":asdfhjasdfhjk");
+        console.log(response.data.code, ":asdfhjasdfhjk");
+        if (response.data.code === "400") {
+          console.log("inside if");
+          toast.error("You have already entered the raffle", {
+            position: "top-right",
+            autoClose: 8000,
+          });
+        }
         // window.location.reload();
       })
       .catch((err) => {
@@ -136,10 +153,9 @@ const WhiteList = (props) => {
   };
 
   useEffect(() => {
- //   getalldiscorddasta();
-    getallwinner();   
+    //   getalldiscorddasta();
+    getallwinner();
     getuser();
-        
   }, [account]);
 
   // console.log("statys we get here",syrupp?.discordAdded)
@@ -181,9 +197,8 @@ const WhiteList = (props) => {
           </div>
           <div className="winText col-12 col-md-6">
             {/* we can make a component here which will render this message when null and winners list otherwise */}
-            Congratulations To Today's winners 🥳🥳 <br/>
-                {winner && <Winner props={winner} />}
-            
+            Congratulations To Today's winners 🥳🥳 <br />
+            {winner && <Winner props={winner} />}
           </div>
         </div>
       </div>

@@ -6,47 +6,41 @@ import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import moment from "moment";
 
 const CountDownBar = ({ entryTime }) => {
-
-
   const [hour, setHours] = useState(null);
   const [minute, setMinutes] = useState(null);
   const [second, setSeconds] = useState(null);
   const [secnd, setSecnd] = useState(0);
 
-  console.log(entryTime);
-  
+  // console.log(entryTime);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSecnd(secnd => secnd + 1);
+      setSecnd((secnd) => secnd + 1);
 
-      let ts = Date.now()
-      
-      ts= ts/1000;
-      ts = Math.floor(ts)
-      console.log(ts);
-      
-      if(ts - entryTime> 43200){
-        setHours(hour => 0)
-        setMinutes(minute => 0)
-        setSeconds( second => 0)
-      }else{
+      let ts = Date.now();
+
+      ts = ts / 1000;
+      ts = Math.floor(ts);
+      // console.log(ts);
+
+      if (ts - entryTime > 43200) {
+        setHours((hour) => 0);
+        setMinutes((minute) => 0);
+        setSeconds((second) => 0);
+      } else {
         let res = ts - entryTime;
-        
-        let resHours = Math.round(res/(60*60))
-        setHours(hour => resHours)
-        res = res%(3600);
-        let resMins = Math.round(res/(60));
-        setMinutes(minute => resMins)
-        res = res%60;
-        setSeconds(second => res)
+
+        let resHours = Math.round(res / (60 * 60));
+        setHours((hour) => resHours);
+        res = res % 3600;
+        let resMins = Math.round(res / 60);
+        setMinutes((minute) => resMins);
+        res = res % 60;
+        setSeconds((second) => res);
       }
-
-
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
 
   return (
     <div className="countdown-bar">
