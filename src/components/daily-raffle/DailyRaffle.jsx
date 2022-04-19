@@ -71,7 +71,7 @@ const DailyRaffle = () => {
   // const [audio] = useState(new Audio({WaffleSound}));
 
   const [bounce, setBounce] = useState(0);
-  const [count, setcount] = useState(498);
+  const [count, setcount] = useState(0);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
