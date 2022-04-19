@@ -26,6 +26,7 @@ const canvasStyles = {
   left: 0,
 };
 
+
 const DailyRaffle = () => {
   const refAnimationInstance = useRef(null);
 
@@ -87,6 +88,10 @@ const DailyRaffle = () => {
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
+  const [second, setSeconds] = useState(0)
+const [minute, setMinutes] = useState(0)
+const [CDhours, setCDHours] = useState(0)
+const [secnd, setSecnd] = useState(0);
 
   let temp = [];
   let winr = [];
@@ -128,6 +133,7 @@ const DailyRaffle = () => {
     timer();
   }, 1000);
 
+
   const handleClick = () => {
     setBounce(bounce + 1);
     const d = new Date();
@@ -136,7 +142,7 @@ const DailyRaffle = () => {
     setcount(count + 1);
     console.log(entryTime+ " YEH entry time hai handle click ka");
     console.log("clicked", t);
-    if (count >= 500) {
+    if (count === 500) {
       
       axios
         .post(
@@ -151,11 +157,8 @@ const DailyRaffle = () => {
         .then((response) => {
           getuser();
           console.log(response.data.status);
-          if(response.data.status === "Failed"){
-
-          }else{
-            window.location.reload();
-          }
+          window.location.reload();
+          
         })
         .catch((err) => {
           console.log("error we get");
@@ -273,6 +276,7 @@ const DailyRaffle = () => {
     if (account) {
       adduser();
       getuser();
+
       getallwinner();
     }
   }, [account]);
@@ -387,7 +391,7 @@ const DailyRaffle = () => {
 
                 {syrCount}
               </div>
-              <CountDownBar data={entryTime} />
+              <CountDownBar  />
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (

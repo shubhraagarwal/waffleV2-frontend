@@ -4,29 +4,116 @@ import axios from "axios";
 import { useWeb3React } from "@web3-react/core";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import moment from "moment";
-
-const CountDownBar = ( entryTime ) => {
+// import { useWeb3React } from "@web3-react/core";
+let timer;
+const CountDownBar = ( ) => {
+  
   const [hour, setHours] = useState(null);
   const [minute, setMinutes] = useState(null);
   const [second, setSeconds] = useState(null);
   const [secnd, setSecnd] = useState(0);
-  console.log(JSON.stringify(entryTime.data));
+  //const { account } = useWeb3React();
+  let temp = [];
+  const [entryTime, setEntryTime] = useState();
   // console.log(entryTime);
-  
-  useEffect(() => {
+  const account = localStorage.getItem('wallet')
+
+  const getuser = async() => {
+    // setOpens(true)
+    
+    console.log(account);
+    console.log("inside getUser");
+    axios
+      .post(
+        `${API_URL_RAFFLE}/api/v1/users/getUser`,
+        { walletAddress: account },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+      .then((response) => {
+        let res = (response);
+        console.log("YEH" +  res.data[0].entryTime);
+        timer = res.data[0].entryTime
+        
+        return Math.floor((res.data[0].entryTime)/1000);
+        console.log( + " YEH ENTRY TIME HAI CD KA" );
+       
+      })
+      .catch((err) => {
+        console.log(err, "err inside getUser");
+        return false;
+      });
+  };
+
+  useEffect( () => {
     const interval = setInterval(() => {
       setSecnd(secnd => secnd + 1);
-      console.log(entryTime + " yeh ENTRY TIME HAI countDOWN KA");
+      // let entryTime = await getuser()
+
+      console.log(account);
+      console.log("inside getUser");
+      axios
+        .post(
+          `${API_URL_RAFFLE}/api/v1/users/getUser`,
+          { walletAddress: account },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
+        .then((response) => {
+          let res = (response);
+          console.log("YEH" +  res.data[0].entryTime);
+          timer = res.data[0].entryTime
+          let tts = timer
+          if(( ts - tts) < 43200){
+            console.log("Inside IF HOON");
+            let res =  entryTime - ts;
+            console.log(res);
+            let resHours = Math.round(res/(60*60))
+            setHours(hour => resHours)
+            res = res%(3600);
+            let resMins = Math.round(res/(60));
+            setMinutes(minute => resMins)
+            res = res%60;
+            console.log(res);
+            setSeconds(second => res)
+    
+          }else{
+            console.log("Inside ELSE HOON");
+            setHours(hour => 0)
+            setMinutes(minute => 0)
+            setSeconds( second => 0)
+    
+          }
+
+          //Math.floor((res.data[0].entryTime)/1000);
+          console.log( + " YEH ENTRY TIME HAI CD KA" );
+         
+        })
+        .catch((err) => {
+          console.log(err, "err inside getUser");
+          return false;
+        });
+
+
       let ts = Date.now()
       console.log(ts);
       ts= ts/1000;
-      entryTime =entryTime/1000
+      let tts = timer
+      
       ts = Math.floor(ts)
-      entryTime = Math.floor(entryTime)
-      console.log(ts);
-      //entryTime = 1650374709 + 10000
-      if(( ts - entryTime) < 43200){
-
+      tts= tts/1000;
+      tts = Math.floor(tts)
+      
+      console.log(ts - tts);
+      //let entryTime = 1650396597+ 10000
+      if(( ts - tts) < 43200){
+        console.log("Inside IF HOON");
         let res =  entryTime - ts;
         console.log(res);
         let resHours = Math.round(res/(60*60))
@@ -39,7 +126,7 @@ const CountDownBar = ( entryTime ) => {
         setSeconds(second => res)
 
       }else{
-
+        console.log("Inside ELSE HOON");
         setHours(hour => 0)
         setMinutes(minute => 0)
         setSeconds( second => 0)
@@ -49,16 +136,12 @@ const CountDownBar = ( entryTime ) => {
 
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [account]);
 
   return (
     <div className="countdown-bar">
       <div className="time-container">
-        {/* <Countdown
-          date={new Date(2022, 3, 1, 4, 30, 0, 0)} //year-(month-1)-date-hour-minute-second-millisecond
-          className="text-center fs-3"
-          renderer={renderer}
-        /> */}
+        
         <ul className="time-container">
           <li>
             <h3>
