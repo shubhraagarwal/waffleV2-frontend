@@ -129,14 +129,14 @@ const DailyRaffle = () => {
 
   const handleClick = () => {
     setBounce(bounce + 1);
-    const d = new Date();
-    const Nowtime = d.getTime();
-    const t = d.getTime() + 500000;
+    
+    let t = Date.now();
+    t = Math.floor(t/1000)
     setcount(count + 1);
-    if (syrCount?.enteryTime < Nowtime) {
-      // setcount(count + 1)
-    }
-    if (count === syrCount?.initialcount) {
+    // if (syrCount?.enteryTime < Nowtime) {
+    //   // setcount(count + 1)
+    // }
+    if (count === 10) {
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
@@ -148,7 +148,8 @@ const DailyRaffle = () => {
           }
         )
         .then((response) => {
-          window.location.reload();
+        //  window.location.reload();
+        console.log('WAFFLE WALA API CHAL RHA HAI')
           getuser();
         })
         .catch((err) => {
@@ -425,6 +426,8 @@ const DailyRaffle = () => {
                     if (count > 0) {
                       if ((count + 1) % 500 === 0) {
                         setsyrCount(syrCount + 4);
+                        fire();
+                      onSound();
                       }
                     }
                   }}
@@ -440,6 +443,8 @@ const DailyRaffle = () => {
                     if (count > 0) {
                       if ((count + 1) % 500 === 0) {
                         setsyrCount(syrCount + 4);
+                        fire();
+                      onSound();
                       }
                     }
                   }}
@@ -453,6 +458,8 @@ const DailyRaffle = () => {
                     if (count > 0) {
                       if ((count + 1) % 500 === 0) {
                         setsyrCount(syrCount + 4);
+                        fire();
+                      onSound();
                       }
                     }
                   }}

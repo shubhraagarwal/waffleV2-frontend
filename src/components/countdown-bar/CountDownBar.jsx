@@ -8,9 +8,9 @@ import moment from "moment";
 const CountDownBar = ({ entryTime }) => {
 
 
-  const [hour, setHours] = useState(null);
-  const [minute, setMinutes] = useState(null);
-  const [second, setSeconds] = useState(null);
+  const [hour, setHours] = useState(0);
+  const [minute, setMinutes] = useState(0);
+  const [second, setSeconds] = useState(0);
   const [secnd, setSecnd] = useState(0);
 
   console.log(entryTime);
@@ -25,21 +25,26 @@ const CountDownBar = ({ entryTime }) => {
       ts= ts/1000;
       ts = Math.floor(ts)
       console.log(ts);
-      
-      if(ts - entryTime> 43200){
-        setHours(hour => 0)
-        setMinutes(minute => 0)
-        setSeconds( second => 0)
-      }else{
-        let res = ts - entryTime;
-        
+      //entryTime = 1650374709 + 10000
+      if(( ts - entryTime) < 43200){
+
+        let res =  entryTime - ts;
+        console.log(res);
         let resHours = Math.round(res/(60*60))
         setHours(hour => resHours)
         res = res%(3600);
         let resMins = Math.round(res/(60));
         setMinutes(minute => resMins)
         res = res%60;
+        console.log(res);
         setSeconds(second => res)
+
+      }else{
+
+        setHours(hour => 0)
+        setMinutes(minute => 0)
+        setSeconds( second => 0)
+
       }
 
 
