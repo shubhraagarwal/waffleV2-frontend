@@ -217,8 +217,8 @@ const DailyRaffle = () => {
         let res = Object.values(response.data[0])
         console.log(res);
 
-        setsyrCount(res[4]);
-        setEntryTime(res[0]);
+        setsyrCount(res[3]);
+        setEntryTime(res[5]);
         temp.push(res[0],res[1],res[2],res[3], res[4], res[5], res[6] );
         
       })

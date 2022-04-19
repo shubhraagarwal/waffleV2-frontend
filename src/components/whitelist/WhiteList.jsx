@@ -40,12 +40,12 @@ const WhiteList = (props) => {
         console.log(Object.values(response.data[0]));
         let res = Object.values(response.data[0])
         
-        setsyrupp(res[4]);
+        setsyrupp(res[3]);
         console.log(res);
 
         console.log(res[3]);
         
-        setDiscord(res[3]);
+        setDiscord(res[2]);
         console.log(discord);
 
         
