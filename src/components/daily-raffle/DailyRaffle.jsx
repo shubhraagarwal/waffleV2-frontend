@@ -173,9 +173,11 @@ const DailyRaffle = () => {
     try {
       localStorage.setItem("injected", "injected");
       if (account) {
-        logout();
+        // logout();
+        setShowModal(false);
       } else {
         login("injected");
+        setShowModal(false);
       }
     } catch (e) {
       console.log(e);
@@ -331,7 +333,7 @@ const DailyRaffle = () => {
   let hours = localStorage.getItem("entryTimeInHours");
   let minutes = localStorage.getItem("entryTimeInMinutes");
   let seconds = localStorage.getItem("entryTimeInSeconds");
-
+  let discord = localStorage.getItem("discord_id");
   return (
     <>
       <section
@@ -349,7 +351,7 @@ const DailyRaffle = () => {
                 className="close"
                 onClick={handleModalClose}
               />
-              {account ? (
+              {!discord ? (
                 <>
                   <h3>Enter Your Discord id</h3>
                   <input
@@ -397,7 +399,7 @@ const DailyRaffle = () => {
                   onClick={connectMetaMask}
                   data-aos="fade"
                 >
-                  <div className="connect"></div> Disconnect Wallet
+                  <div className="connect"></div> {discord}
                 </button>
               ) : (
                 <button
@@ -416,7 +418,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours === "00" && minutes === "00" && seconds === "00" ? (
+          {hours <= 0 ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
@@ -502,7 +504,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours == 0 && minutes == 0 && seconds == 0 ? (
+          {hours < 0 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
