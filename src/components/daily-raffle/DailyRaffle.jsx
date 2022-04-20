@@ -331,8 +331,6 @@ const DailyRaffle = () => {
   let hours = localStorage.getItem("entryTimeInHours");
   let minutes = localStorage.getItem("entryTimeInMinutes");
   let seconds = localStorage.getItem("entryTimeInSeconds");
-  console.clear();
-  console.log(hours, minutes, seconds);
 
   return (
     <>
@@ -418,7 +416,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours == 0 && minutes == 0 && seconds == 0 ? (
+          {hours === "00" && minutes === "00" && seconds === "00" ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
