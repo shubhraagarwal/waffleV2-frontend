@@ -16,6 +16,7 @@ import CountDownBar from "../countdown-bar/CountDownBar";
 import WhiteList from "../whitelist/WhiteList";
 import "./DailyRaffle.scss";
 import { toast } from "react-toastify";
+import freeze from "../../assets/ICE_HEAD.png";
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -76,16 +77,18 @@ const DailyRaffle = () => {
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
   const [winner, setwinner] = useState([]);
-  const [whitelist, setwhitelist] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [discordid, setdiscordid] = useState("");
   const [day, setDay] = useState(0);
   const [syrCount, setsyrCount] = useState(0);
   const [entryTime, setEntryTime] = useState(0);
   // const { Time } = PresaleStartEnd();
-  const [hour, setHour] = useState(0);
+  const [hrs, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
+  const [hour, setHours] = useState(null);
+  const [minute, setMinutes] = useState(null);
+  const [second, setSeconds] = useState(null);
 
   let temp = [];
   let winr = [];
@@ -131,10 +134,11 @@ const DailyRaffle = () => {
     setBounce(bounce + 1);
     const d = new Date();
     const t = d.getTime() + 500000;
+    //let tts = date.now()
     setcount(count + 1);
+    console.log(entryTime + " YEH entry time hai handle click ka");
     console.log("clicked", t);
-    if (count >= 500) {
-      console.log(t);
+    if (count === 500) {
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
@@ -147,7 +151,7 @@ const DailyRaffle = () => {
         )
         .then((response) => {
           getuser();
-          console.log(response);
+          console.log(response.data.status);
           window.location.reload();
         })
         .catch((err) => {
@@ -218,6 +222,7 @@ const DailyRaffle = () => {
 
         setsyrCount(res[3]);
         setEntryTime(res[5]);
+        console.log(res[5] + " YEH ENTRY TIME HAI DAILY RAFFLE KA");
         temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
@@ -265,6 +270,7 @@ const DailyRaffle = () => {
     if (account) {
       adduser();
       getuser();
+
       getallwinner();
     }
   }, [account]);
@@ -322,6 +328,9 @@ const DailyRaffle = () => {
         return false;
       });
   };
+  let hours = localStorage.getItem("entryTimeInHours");
+  let minutes = localStorage.getItem("entryTimeInMinutes");
+  let seconds = localStorage.getItem("entryTimeInSeconds");
 
   return (
     <>
@@ -379,7 +388,7 @@ const DailyRaffle = () => {
 
                 {syrCount}
               </div>
-              <CountDownBar entryTime={entryTime} />
+              <CountDownBar />
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (
@@ -406,73 +415,82 @@ const DailyRaffle = () => {
           </div>
 
           {/* raffle for pc  */}
-          <div className="mouse_move d-none d-xl-block">
-            <div
-              className="face-container"
-              onClick={handleClick}
-              onAnimationEnd={() => setBounce(0)}
-              bounce={bounce}
-            >
-              <div
-                className="face-fig"
-                onClick={() => {
-                  if (count > 0) {
-                    if ((count + 1) % 500 === 0) {
-                      setsyrCount(syrCount + 4);
-                      fire();
-                      onSound();
-                    }
-                  }
-                }}
-              >
-                <img
-                  src={face}
-                  alt="logo"
-                  id="img1"
-                  value="5"
-                  onClick={() => {
-                    if (count > 0) {
-                      if ((count + 1) % 500 === 0) {
-                        setsyrCount(syrCount + 4);
-                      }
-                    }
-                  }}
-                />
 
-                <img
-                  src={eyes}
-                  alt="logo"
-                  id="img1"
-                  className={inView ? "mouse parts eyes" : "parts eyes static"}
-                  value="3"
+          {hours === "00" && minutes === "00" && seconds === "00" ? (
+            <div className="mouse_move d-none d-xl-block">
+              <div
+                className="face-container"
+                onClick={handleClick}
+                onAnimationEnd={() => setBounce(0)}
+                bounce={bounce}
+              >
+                <div
+                  className="face-fig"
                   onClick={() => {
                     if (count > 0) {
                       if ((count + 1) % 500 === 0) {
                         setsyrCount(syrCount + 4);
+                        fire();
+                        onSound();
                       }
                     }
                   }}
-                />
-                <img
-                  src={mouth}
-                  alt="logo"
-                  id="img1"
-                  className="parts"
-                  onClick={() => {
-                    if (count > 0) {
-                      if ((count + 1) % 500 === 0) {
-                        setsyrCount(syrCount + 4);
+                >
+                  <img
+                    src={face}
+                    alt="logo"
+                    id="img1"
+                    value="5"
+                    onClick={() => {
+                      if (count > 0) {
+                        if ((count + 1) % 500 === 0) {
+                          setsyrCount(syrCount + 4);
+                        }
                       }
+                    }}
+                  />
+
+                  <img
+                    src={eyes}
+                    alt="logo"
+                    id="img1"
+                    className={
+                      inView ? "mouse parts eyes" : "parts eyes static"
                     }
-                  }}
+                    value="3"
+                    onClick={() => {
+                      if (count > 0) {
+                        if ((count + 1) % 500 === 0) {
+                          setsyrCount(syrCount + 4);
+                        }
+                      }
+                    }}
+                  />
+                  <img
+                    src={mouth}
+                    alt="logo"
+                    id="img1"
+                    className="parts"
+                    onClick={() => {
+                      if (count > 0) {
+                        if ((count + 1) % 500 === 0) {
+                          setsyrCount(syrCount + 4);
+                        }
+                      }
+                    }}
+                  />
+                </div>
+                <ReactCanvasConfetti
+                  refConfetti={getInstance}
+                  style={canvasStyles}
                 />
               </div>
-              <ReactCanvasConfetti
-                refConfetti={getInstance}
-                style={canvasStyles}
-              />
             </div>
-          </div>
+          ) : (
+            <div>
+              <img src={freeze} alt="freeze" />
+            </div>
+          )}
 
           {/* <div className='countsclick'>
           <div className='countsinner'>
@@ -484,16 +502,18 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          <div className="d-xl-none">
-            <img
-              src={logo}
-              alt="logo"
-              className="mob-face img-fluid"
-              onClick={handleClick}
-              onAnimationEnd={() => setBounce(0)}
-              bounce={bounce}
-            />
-          </div>
+          {hours == 0 && minutes == 0 && seconds == 0 ? (
+            <div className="d-xl-none">
+              <img
+                src={logo}
+                alt="logo"
+                className="mob-face img-fluid"
+                onClick={handleClick}
+                onAnimationEnd={() => setBounce(0)}
+                bounce={bounce}
+              />
+            </div>
+          ) : null}
         </div>
       </section>
       <WhiteList fun={syrupSub} />
