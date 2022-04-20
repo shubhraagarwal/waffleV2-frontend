@@ -53,15 +53,15 @@ const CountDownBar = () => {
         <ul className="time-container">
           <li>
             <h3>
-              {hour}
+              {hour >= 0 ? hour : 0}
               HR
             </h3>
           </li>
           <li>
-            <h3>{minute} Min</h3>
+            <h3>{hour >= 0 ? minute : 0} Min</h3>
           </li>
           <li>
-            <h3>{second} Sec</h3>
+            <h3>{hour >= 0 ? second : 0} Sec</h3>
           </li>
         </ul>
       </div>

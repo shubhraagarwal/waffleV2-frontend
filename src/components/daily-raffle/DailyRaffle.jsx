@@ -418,7 +418,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours === "00" && minutes === "00" && seconds === "00" ? (
+          {hours <= 0 ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
@@ -504,7 +504,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours == 0 && minutes == 0 && seconds == 0 ? (
+          {hours < 0 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
