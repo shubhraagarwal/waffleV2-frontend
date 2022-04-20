@@ -173,9 +173,11 @@ const DailyRaffle = () => {
     try {
       localStorage.setItem("injected", "injected");
       if (account) {
-        logout();
+        // logout();
+        setShowModal(false);
       } else {
         login("injected");
+        setShowModal(false);
       }
     } catch (e) {
       console.log(e);
@@ -331,7 +333,7 @@ const DailyRaffle = () => {
   let hours = localStorage.getItem("entryTimeInHours");
   let minutes = localStorage.getItem("entryTimeInMinutes");
   let seconds = localStorage.getItem("entryTimeInSeconds");
-
+  let discord = localStorage.getItem("discord_id");
   return (
     <>
       <section
@@ -349,7 +351,7 @@ const DailyRaffle = () => {
                 className="close"
                 onClick={handleModalClose}
               />
-              {account ? (
+              {!discord ? (
                 <>
                   <h3>Enter Your Discord id</h3>
                   <input
@@ -397,7 +399,7 @@ const DailyRaffle = () => {
                   onClick={connectMetaMask}
                   data-aos="fade"
                 >
-                  <div className="connect"></div> Disconnect Wallet
+                  <div className="connect"></div> {discord}
                 </button>
               ) : (
                 <button
