@@ -40,12 +40,10 @@ const CountDownBar = () => {
           setMinutes(moment(timeDifference).format("mm"));
           setSeconds(moment(timeDifference).format("ss"));
           localStorage.setItem("entryTimeInHours", hour);
-          localStorage.setItem("entryTimeInMinutes", minute);
-          localStorage.setItem("entryTimeInSeconds", second);
         });
     }, 1000);
     return () => clearInterval(interval);
-  }, [account]);
+  }, [account, hour]);
 
   return (
     <div className="countdown-bar">
@@ -53,15 +51,15 @@ const CountDownBar = () => {
         <ul className="time-container">
           <li>
             <h3>
-              {hour >= 0 ? hour : 0}
+              {hour >= 0 && hour < 12 ? hour : 0}
               HR
             </h3>
           </li>
           <li>
-            <h3>{hour >= 0 ? minute : 0} Min</h3>
+            <h3>{hour >= 0 && hour < 12 ? minute : 0} Min</h3>
           </li>
           <li>
-            <h3>{hour >= 0 ? second : 0} Sec</h3>
+            <h3>{hour >= 0 && hour < 12 ? second : 0} Sec</h3>
           </li>
         </ul>
       </div>

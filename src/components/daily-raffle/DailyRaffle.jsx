@@ -89,6 +89,7 @@ const DailyRaffle = () => {
   const [hour, setHours] = useState(null);
   const [minute, setMinutes] = useState(null);
   const [second, setSeconds] = useState(null);
+  const [splicedWalletId, setSplicedWalletId] = useState("");
 
   let temp = [];
   let winr = [];
@@ -105,7 +106,13 @@ const DailyRaffle = () => {
   var userwhitelist = winner?.find(
     (e) => e?.walletAddress === account?.toLowerCase()
   );
-
+  useEffect(() => {
+    setSplicedWalletId(
+      `${localStorage.getItem("wallet").slice(0, 4)}...${localStorage
+        .getItem("wallet")
+        .slice(-4)}`
+    );
+  }, []);
   function timer() {
     var time = new Date(syrCount?.enteryTime);
     var now = new Date();
@@ -173,7 +180,8 @@ const DailyRaffle = () => {
     try {
       localStorage.setItem("injected", "injected");
       if (account) {
-        // logout();
+        logout();
+
         setShowModal(false);
       } else {
         login("injected");
@@ -272,7 +280,6 @@ const DailyRaffle = () => {
     if (account) {
       adduser();
       getuser();
-
       getallwinner();
     }
   }, [account]);
@@ -331,8 +338,6 @@ const DailyRaffle = () => {
       });
   };
   let hours = localStorage.getItem("entryTimeInHours");
-  let minutes = localStorage.getItem("entryTimeInMinutes");
-  let seconds = localStorage.getItem("entryTimeInSeconds");
   let discord = localStorage.getItem("discord_id");
   return (
     <>
@@ -394,13 +399,24 @@ const DailyRaffle = () => {
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (
-                <button
-                  className="blue-gradient"
-                  onClick={connectMetaMask}
-                  data-aos="fade"
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    width: "15vw",
+                    color: "white",
+                  }}
                 >
-                  <div className="connect"></div> {discord}
-                </button>
+                  {`${discord}`}
+                  <button
+                    className="blue-gradient"
+                    onClick={connectMetaMask}
+                    data-aos="fade"
+                  >
+                    <div className="connect"></div> {splicedWalletId}
+                  </button>
+                </div>
               ) : (
                 <button
                   className="blue-gradient"
@@ -418,7 +434,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours <= 0 ? (
+          {hours <= 0 || hours >= 12 ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
@@ -504,7 +520,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours < 0 ? (
+          {hours < 0 || hours >= 12 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
