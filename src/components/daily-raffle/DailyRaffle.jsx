@@ -143,8 +143,7 @@ const DailyRaffle = () => {
     const t = d.getTime() + 500000;
     //let tts = date.now()
     setcount(count + 1);
-    console.log(entryTime + " YEH entry time hai handle click ka");
-    console.log("clicked", t);
+
     if (count === 500) {
       axios
         .post(
@@ -158,15 +157,13 @@ const DailyRaffle = () => {
         )
         .then((response) => {
           getuser();
-          console.log(response.data.status);
+
           window.location.reload();
         })
         .catch((err) => {
-          console.log("error we get");
+          console.log(err);
           return false;
         });
-    } else {
-      console.log("else");
     }
   };
   const mouseEnter = () => {
@@ -193,7 +190,6 @@ const DailyRaffle = () => {
   };
 
   const adduser = () => {
-    console.log(account);
     localStorage.setItem("wallet", account);
     axios
       .post(
@@ -207,15 +203,13 @@ const DailyRaffle = () => {
       )
 
       .then((response) => {
-        console.log("added");
+        console.log(response);
       })
       .catch((err) => {
         return false;
       });
   };
   const getuser = () => {
-    // setOpens(true)
-    console.log("inside getUser");
     axios
       .post(
         `${API_URL_RAFFLE}/api/v1/users/getUser`,
@@ -228,15 +222,12 @@ const DailyRaffle = () => {
       )
       .then((response) => {
         let res = Object.values(response.data[0]);
-        console.log(res);
 
         setsyrCount(res[3]);
         setEntryTime(res[5]);
-        console.log(res[5] + " YEH ENTRY TIME HAI DAILY RAFFLE KA");
         temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
-        console.log(err, "err inside getUser");
         return false;
       });
   };
@@ -248,10 +239,6 @@ const DailyRaffle = () => {
         "Access-Control-Allow-Origin": "*",
       })
       .then((response) => {
-        // console.log("get all user", response)
-        // setallusers(response.data.data)
-        console.log(response.data);
-
         winr.push(
           response.data[0],
           response.data[1],
@@ -318,18 +305,14 @@ const DailyRaffle = () => {
         discordid: discordid,
       })
       .then((response) => {
-        // setsyrup(response.data.user)
-        console.log(response.data);
         setShowModal(false);
         getuser();
         toast.success("Successfully Added Discord ID", {
           position: "top-right",
           autoClose: 8000,
         });
-        // console.log("getuser", response)
       })
       .catch((err) => {
-        // setOpens(false)
         toast.warning("Error While adding Discord ID", {
           position: "top-right",
           autoClose: 3000,

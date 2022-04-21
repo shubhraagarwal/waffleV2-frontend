@@ -28,11 +28,7 @@ const CountDownBar = () => {
           let entryTimeInHours = moment(res.data[0].entryTime).add(11, "hours");
           let currentTimeInHours = moment();
           let timeDifference = entryTimeInHours.diff(currentTimeInHours, "HH");
-          console.log(
-            moment(timeDifference).format("HH"),
-            moment(entryTimeInHours).format("HH"),
-            currentTimeInHours.format("HH")
-          );
+
           setHours(
             moment(entryTimeInHours).format("HH") -
               currentTimeInHours.format("HH")
