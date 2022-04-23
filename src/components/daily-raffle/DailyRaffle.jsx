@@ -86,9 +86,7 @@ const DailyRaffle = () => {
   const [hrs, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
-  const [hour, setHours] = useState(null);
-  const [minute, setMinutes] = useState(null);
-  const [second, setSeconds] = useState(null);
+  const [splicedWalletId, setSplicedWalletId] = useState("");
 
   let temp = [];
   let winr = [];
@@ -105,26 +103,33 @@ const DailyRaffle = () => {
   var userwhitelist = winner?.find(
     (e) => e?.walletAddress === account?.toLowerCase()
   );
-
-  function timer() {
-    var time = new Date(syrCount?.enteryTime);
-    var now = new Date();
-    var diff = time.getTime() - now.getTime();
-    if (diff <= 0) {
-      return;
+  useEffect(() => {
+    console.clear();
+    console.log(account);
+    // setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
+    if (account) {
+      setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
     }
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(diff / (1000 * 60 * 60));
-    var mins = Math.floor(diff / (1000 * 60));
-    var secs = Math.floor(diff / 1000);
-    var d = days;
-    var h = hours - days * 24;
-    var m = mins - hours * 60;
-    var s = secs - mins * 60;
-    setDay(d);
-    setHour(h);
-    setMin(m);
-    setSec(s);
+  }, [account]);
+  function timer() {
+    // var time = new Date(syrCount?.enteryTime);
+    // var now = new Date();
+    // var diff = time.getTime() - now.getTime();
+    // if (diff <= 0) {
+    //   return;
+    // }
+    // var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    // var hours = Math.floor(diff / (1000 * 60 * 60));
+    // var mins = Math.floor(diff / (1000 * 60));
+    // var secs = Math.floor(diff / 1000);
+    // var d = days;
+    // var h = hours - days * 24;
+    // var m = mins - hours * 60;
+    // var s = secs - mins * 60;
+    // setDay(d);
+    // setHour(h);
+    // setMin(m);
+    // setSec(s);
   }
   setInterval(() => {
     timer();
@@ -136,8 +141,7 @@ const DailyRaffle = () => {
     const t = d.getTime() + 500000;
     //let tts = date.now()
     setcount(count + 1);
-    console.log(entryTime + " YEH entry time hai handle click ka");
-    console.log("clicked", t);
+
     if (count === 500) {
       axios
         .post(
@@ -151,15 +155,13 @@ const DailyRaffle = () => {
         )
         .then((response) => {
           getuser();
-          console.log(response.data.status);
+
           window.location.reload();
         })
         .catch((err) => {
-          console.log("error we get");
+          console.log(err);
           return false;
         });
-    } else {
-      console.log("else");
     }
   };
   const mouseEnter = () => {
@@ -173,11 +175,13 @@ const DailyRaffle = () => {
     try {
       localStorage.setItem("injected", "injected");
       if (account) {
-        // logout();
+        logout();
         setShowModal(false);
       } else {
+        getuser();
         login("injected");
         setShowModal(false);
+        window.location.reload();
       }
     } catch (e) {
       console.log(e);
@@ -185,7 +189,6 @@ const DailyRaffle = () => {
   };
 
   const adduser = () => {
-    console.log(account);
     localStorage.setItem("wallet", account);
     axios
       .post(
@@ -199,15 +202,13 @@ const DailyRaffle = () => {
       )
 
       .then((response) => {
-        console.log("added");
+        console.log(response);
       })
       .catch((err) => {
         return false;
       });
   };
   const getuser = () => {
-    // setOpens(true)
-    console.log("inside getUser");
     axios
       .post(
         `${API_URL_RAFFLE}/api/v1/users/getUser`,
@@ -220,15 +221,12 @@ const DailyRaffle = () => {
       )
       .then((response) => {
         let res = Object.values(response.data[0]);
-        console.log(res);
 
         setsyrCount(res[3]);
         setEntryTime(res[5]);
-        console.log(res[5] + " YEH ENTRY TIME HAI DAILY RAFFLE KA");
         temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
-        console.log(err, "err inside getUser");
         return false;
       });
   };
@@ -240,10 +238,6 @@ const DailyRaffle = () => {
         "Access-Control-Allow-Origin": "*",
       })
       .then((response) => {
-        // console.log("get all user", response)
-        // setallusers(response.data.data)
-        console.log(response.data);
-
         winr.push(
           response.data[0],
           response.data[1],
@@ -272,7 +266,6 @@ const DailyRaffle = () => {
     if (account) {
       adduser();
       getuser();
-
       getallwinner();
     }
   }, [account]);
@@ -311,19 +304,22 @@ const DailyRaffle = () => {
         discordid: discordid,
       })
       .then((response) => {
-        // setsyrup(response.data.user)
-        console.log(response.data);
-        setShowModal(false);
-        getuser();
-        toast.success("Successfully Added Discord ID", {
-          position: "top-right",
-          autoClose: 8000,
-        });
-        // console.log("getuser", response)
+        if (response.data.code === 200) {
+          setShowModal(false);
+          getuser();
+          toast.success("Successfully Added Discord ID", {
+            position: "top-right",
+            autoClose: 8000,
+          });
+        } else {
+          toast.warning("This ID is already linked to another account", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
       })
       .catch((err) => {
-        // setOpens(false)
-        toast.warning("Error While adding Discord ID", {
+        toast.warning("This ID is already linked to another account", {
           position: "top-right",
           autoClose: 3000,
         });
@@ -331,8 +327,6 @@ const DailyRaffle = () => {
       });
   };
   let hours = localStorage.getItem("entryTimeInHours");
-  let minutes = localStorage.getItem("entryTimeInMinutes");
-  let seconds = localStorage.getItem("entryTimeInSeconds");
   let discord = localStorage.getItem("discord_id");
   return (
     <>
@@ -394,13 +388,24 @@ const DailyRaffle = () => {
             </div>
             <div className="d-flex justify-content-center justify-content-md-end flex-column">
               {account ? (
-                <button
-                  className="blue-gradient"
-                  onClick={connectMetaMask}
-                  data-aos="fade"
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    width: "15vw",
+                    color: "white",
+                  }}
                 >
-                  <div className="connect"></div> {discord}
-                </button>
+                  {`${discord}`}
+                  <button
+                    className="blue-gradient"
+                    onClick={connectMetaMask}
+                    data-aos="fade"
+                  >
+                    <div className="connect"></div> {splicedWalletId}
+                  </button>
+                </div>
               ) : (
                 <button
                   className="blue-gradient"
@@ -418,7 +423,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours <= 0 ? (
+          {hours <= 0 || hours >= 12 ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
@@ -504,7 +509,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours < 0 ? (
+          {hours < 0 || hours >= 12 ? (
             <div className="d-xl-none">
               <img
                 src={logo}

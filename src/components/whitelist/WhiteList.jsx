@@ -7,8 +7,6 @@ import Winner from "../winner/Winner";
 import { toast } from "react-toastify";
 
 const WhiteList = (props) => {
-  const [whiteListed, setWhiteListed] = useState(false);
-
   const [syrupp, setsyrupp] = useState("");
   const [discord, setDiscord] = useState("");
   const [allusers, setallusers] = useState([]);
@@ -17,13 +15,9 @@ const WhiteList = (props) => {
   let temp = [];
   let winr = [];
 
-  // console.log('winnetime',wintime)
-  console.log("discord syrup", syrupp);
   const { account } = useWeb3React();
 
   const getuser = () => {
-    // setOpens(true)
-    console.log("inside getUser");
     axios
       .post(
         `${API_URL_RAFFLE}/api/v1/users/getUser`,
@@ -35,24 +29,15 @@ const WhiteList = (props) => {
         }
       )
       .then((response) => {
-        console.log(response.data[0]);
-        console.log(response.data, "Asdfsah.k");
-        console.log(Object.values(response.data[0]));
         let res = Object.values(response.data[0]);
 
         setsyrupp(res[3]);
-        console.log(res);
-
-        console.log(res[3]);
 
         setDiscord(res[2]);
-        console.log(discord);
 
         temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
-        console.log(temp);
       })
       .catch((err) => {
-        console.log(err, "err inside getUser");
         return false;
       });
   };
@@ -75,7 +60,6 @@ const WhiteList = (props) => {
         "Access-Control-Allow-Origin": "*",
       })
       .then((response) => {
-        console.log(response.data);
         winr.push(
           response.data[0],
           response.data[1],
@@ -89,7 +73,6 @@ const WhiteList = (props) => {
           response.data[9]
         );
         setwinner(winr);
-        console.log(winr);
       })
       .catch((err) => {
         return false;
@@ -97,7 +80,6 @@ const WhiteList = (props) => {
   };
   var now = new Date(wintime);
   var tttt = now.setDate(now.getDate() + 1);
-  console.log("epoc time ", tttt);
 
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
@@ -128,8 +110,6 @@ const WhiteList = (props) => {
   }, 1000);
 
   const enterRaffle = () => {
-    // setOpens(true)
-    console.log(discord);
     axios
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
         walletAddress: temp[2],
@@ -137,9 +117,7 @@ const WhiteList = (props) => {
         syrups: temp[4] - 8,
       })
       .then((response) => {
-        console.log(response.data.code, ":asdfhjasdfhjk");
         if (response.data.code === "400") {
-          console.log("inside if");
           toast.error("You have already entered the raffle", {
             position: "top-right",
             autoClose: 8000,
@@ -157,8 +135,6 @@ const WhiteList = (props) => {
     getallwinner();
     getuser();
   }, [account]);
-
-  // console.log("statys we get here",syrupp?.discordAdded)
 
   return (
     <section className="container-fluid white-list">
