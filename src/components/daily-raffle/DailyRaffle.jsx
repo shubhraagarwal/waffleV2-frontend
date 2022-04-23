@@ -86,9 +86,6 @@ const DailyRaffle = () => {
   const [hrs, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
-  const [hour, setHours] = useState(null);
-  const [minute, setMinutes] = useState(null);
-  const [second, setSeconds] = useState(null);
   const [splicedWalletId, setSplicedWalletId] = useState("");
 
   let temp = [];
@@ -107,31 +104,32 @@ const DailyRaffle = () => {
     (e) => e?.walletAddress === account?.toLowerCase()
   );
   useEffect(() => {
-    setSplicedWalletId(
-      `${localStorage.getItem("wallet").slice(0, 4)}...${localStorage
-        .getItem("wallet")
-        .slice(-4)}`
-    );
-  }, []);
-  function timer() {
-    var time = new Date(syrCount?.enteryTime);
-    var now = new Date();
-    var diff = time.getTime() - now.getTime();
-    if (diff <= 0) {
-      return;
+    console.clear();
+    console.log(account);
+    // setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
+    if (account) {
+      setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
     }
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(diff / (1000 * 60 * 60));
-    var mins = Math.floor(diff / (1000 * 60));
-    var secs = Math.floor(diff / 1000);
-    var d = days;
-    var h = hours - days * 24;
-    var m = mins - hours * 60;
-    var s = secs - mins * 60;
-    setDay(d);
-    setHour(h);
-    setMin(m);
-    setSec(s);
+  }, [account]);
+  function timer() {
+    // var time = new Date(syrCount?.enteryTime);
+    // var now = new Date();
+    // var diff = time.getTime() - now.getTime();
+    // if (diff <= 0) {
+    //   return;
+    // }
+    // var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    // var hours = Math.floor(diff / (1000 * 60 * 60));
+    // var mins = Math.floor(diff / (1000 * 60));
+    // var secs = Math.floor(diff / 1000);
+    // var d = days;
+    // var h = hours - days * 24;
+    // var m = mins - hours * 60;
+    // var s = secs - mins * 60;
+    // setDay(d);
+    // setHour(h);
+    // setMin(m);
+    // setSec(s);
   }
   setInterval(() => {
     timer();
@@ -178,11 +176,12 @@ const DailyRaffle = () => {
       localStorage.setItem("injected", "injected");
       if (account) {
         logout();
-
         setShowModal(false);
       } else {
+        getuser();
         login("injected");
         setShowModal(false);
+        window.location.reload();
       }
     } catch (e) {
       console.log(e);
@@ -305,15 +304,22 @@ const DailyRaffle = () => {
         discordid: discordid,
       })
       .then((response) => {
-        setShowModal(false);
-        getuser();
-        toast.success("Successfully Added Discord ID", {
-          position: "top-right",
-          autoClose: 8000,
-        });
+        if (response.data.code === 200) {
+          setShowModal(false);
+          getuser();
+          toast.success("Successfully Added Discord ID", {
+            position: "top-right",
+            autoClose: 8000,
+          });
+        } else {
+          toast.warning("This ID is already linked to another account", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
       })
       .catch((err) => {
-        toast.warning("Error While adding Discord ID", {
+        toast.warning("This ID is already linked to another account", {
           position: "top-right",
           autoClose: 3000,
         });
