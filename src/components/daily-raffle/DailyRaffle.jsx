@@ -17,6 +17,7 @@ import WhiteList from "../whitelist/WhiteList";
 import "./DailyRaffle.scss";
 import { toast } from "react-toastify";
 import freeze from "../../assets/ICE_HEAD.png";
+import moment from "moment";
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -72,7 +73,7 @@ const DailyRaffle = () => {
   // const [audio] = useState(new Audio({WaffleSound}));
 
   const [bounce, setBounce] = useState(0);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(498);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
@@ -137,12 +138,12 @@ const DailyRaffle = () => {
 
   const handleClick = () => {
     setBounce(bounce + 1);
-    const d = new Date();
-    const t = d.getTime() + 500000;
+    const t = Date.now();
     //let tts = date.now()
     setcount(count + 1);
-
-    if (count === 500) {
+    console.log("clicked", typeof count, count, t);
+    if (count > 499) {
+      console.log("clicked inside if");
       axios
         .post(
           `${API_URL_RAFFLE}/api/v1/users/addViewsOfWaffleCount`,
@@ -155,13 +156,15 @@ const DailyRaffle = () => {
         )
         .then((response) => {
           getuser();
-
+          console.log(response);
           window.location.reload();
         })
         .catch((err) => {
           console.log(err);
           return false;
         });
+    } else {
+      console.log("inside else");
     }
   };
   const mouseEnter = () => {
@@ -297,19 +300,19 @@ const DailyRaffle = () => {
       })
       .then((response) => {
         console.log(response.data);
-        // if (response.data.code === 200) {
-        //   setShowModal(false);
-        //   getuser();
-        //   toast.success("Successfully Added Discord ID", {
-        //     position: "top-right",
-        //     autoClose: 8000,
-        //   });
-        // } else {
-        //   toast.warning("This ID is already linked to another account", {
-        //     position: "top-right",
-        //     autoClose: 3000,
-        //   });
-        // }
+        if (response.data.code === 200) {
+          setShowModal(false);
+          getuser();
+          toast.success("Successfully Added Discord ID", {
+            position: "top-right",
+            autoClose: 8000,
+          });
+        } else {
+          toast.warning("This ID is already linked to another account", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
       })
       .catch((err) => {
         toast.warning("This ID is already linked to another account", {
@@ -506,7 +509,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours < 0 || hours >= 12 ? (
+          {/* {hours < 0 || hours >= 12 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
@@ -517,7 +520,7 @@ const DailyRaffle = () => {
                 bounce={bounce}
               />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       </section>
       <WhiteList fun={syrupSub} />
