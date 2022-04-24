@@ -26,17 +26,30 @@ const CountDownBar = () => {
         )
         .then((res) => {
           console.log(res.data[0].entryTime);
-          let entryTimeInHours = moment(res.data[0].entryTime).add(11, "hours");
-          let currentTimeInHours = moment();
-          let timeDifference = entryTimeInHours.diff(currentTimeInHours, "HH");
-          console.log(timeDifference);
+          let entryTimeInHours = moment(res.data[0].entryTime)
+            .add(11, "hours")
+            .format("YYYY-MM-DD HH:mm:ss");
+          let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
+          let timeDifference = moment(entryTimeInHours).diff(
+            currentTimeInHours,
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          console.log(
+            moment(entryTimeInHours).format("HH"),
+            moment(currentTimeInHours).format("HH"),
+            moment(timeDifference).format("YYYY-MM-DD HH:mm:ss")
+          );
           setHours(
             moment(entryTimeInHours).format("HH") -
-              currentTimeInHours.format("HH")
+              moment(currentTimeInHours).format("HH")
           );
           setMinutes(moment(timeDifference).format("mm"));
           setSeconds(moment(timeDifference).format("ss"));
-          localStorage.setItem("entryTimeInHours", hour);
+          localStorage.setItem(
+            "entryTimeInHours",
+            moment(entryTimeInHours).format("HH") -
+              moment(currentTimeInHours).format("HH")
+          );
         });
     }, 1000);
     return () => clearInterval(interval);

@@ -86,7 +86,8 @@ const DailyRaffle = () => {
   // const { Time } = PresaleStartEnd();
   const [hrs, setHour] = useState(0);
   const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(0);
+  const [hasDiscord, setHasDiscord] = useState(0);
+  const [showDiscord, setShowDiscord] = useState();
   const [splicedWalletId, setSplicedWalletId] = useState("");
 
   let temp = [];
@@ -110,6 +111,7 @@ const DailyRaffle = () => {
     // setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
     if (account) {
       setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
+      setShowDiscord(true);
     }
   }, [account]);
   function timer() {
@@ -146,7 +148,7 @@ const DailyRaffle = () => {
     //let tts = date.now()
     setcount(count + 1);
     console.log("clicked", typeof count, count, t);
-    if (count > 499) {
+    if (count >= 500) {
       console.log("clicked inside if");
       axios
         .post(
@@ -161,7 +163,7 @@ const DailyRaffle = () => {
         .then((response) => {
           getuser();
           console.log(response);
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((err) => {
           console.log(err);
@@ -231,6 +233,7 @@ const DailyRaffle = () => {
         setdiscordid(response.data[0].discord_id);
         setsyrCount(response.data[0].syrups);
         setEntryTime(response.data[0].entryTime);
+        setHasDiscord(response.data[0].hasDiscord);
         // setEntryTime(res[5]);
         // temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
@@ -290,8 +293,7 @@ const DailyRaffle = () => {
 
   const dsicordenterance = () => {
     // setOpens(true)
-
-    localStorage.setItem("discord_id", discordid);
+    console.log("discordentrance", account, discordid);
     axios
       .post(`${API_URL_RAFFLE}/api/v1/users/addDiscordId`, {
         walletAddress: account,
@@ -299,6 +301,7 @@ const DailyRaffle = () => {
       })
       .then((response) => {
         console.log(response.data);
+        setShowDiscord(false);
         if (response.data.code === 200) {
           setShowModal(false);
           getuser();
@@ -322,7 +325,6 @@ const DailyRaffle = () => {
       });
   };
   let hours = localStorage.getItem("entryTimeInHours");
-  let discord = localStorage.getItem("discord_id");
   return (
     <>
       <section
@@ -340,25 +342,22 @@ const DailyRaffle = () => {
                 className="close"
                 onClick={handleModalClose}
               />
-              {!discord ? (
-                <>
-                  <h3>Enter Your Discord id</h3>
-                  <input
-                    type="text"
-                    onChange={inputadd}
-                    placeholder="user#2232"
-                  />
-                  {discordid.length > 0 ? (
-                    <button onClick={dsicordenterance}>Submit</button>
-                  ) : (
-                    <button disabled>Submit</button>
-                  )}
-                </>
+              <>
+                <h3>Please Connect Metamask First</h3>
+                <button onClick={connectMetaMask}>Connect MetaMask</button>
+              </>
+            </div>
+          </div>
+        )}
+        {showDiscord && !hasDiscord && (
+          <div className="modal-container">
+            <div className="content-wrapper">
+              <h3>Enter Your Discord id</h3>
+              <input type="text" onChange={inputadd} placeholder="user#2232" />
+              {discordid.length > 0 ? (
+                <button onClick={dsicordenterance}>Submit</button>
               ) : (
-                <>
-                  <h3>Please Connect Metamask First</h3>
-                  <button onClick={connectMetaMask}>Connect MetaMask</button>
-                </>
+                <button disabled>Submit</button>
               )}
             </div>
           </div>
@@ -371,7 +370,7 @@ const DailyRaffle = () => {
         </div>
 
         <div className="container text-center">
-          <div className="top-bar">
+          <div className="top-bar d-flex flex-column flex-md-row ">
             <div className="d-flex justify-content-center justify-content-md-start flex-column">
               <div className="balance" data-aos="fade">
                 <img
@@ -385,7 +384,7 @@ const DailyRaffle = () => {
               </div>
               <CountDownBar />
             </div>
-            <div className="d-flex justify-content-center justify-content-md-end flex-column">
+            <div className="d-flex justify-content-center justify-content-md-end align-items-center flex-column w-75">
               {account ? (
                 <div
                   style={{
@@ -395,6 +394,7 @@ const DailyRaffle = () => {
                     width: "15vw",
                     color: "white",
                   }}
+                  className=" d-flex flex-column flex-md-row "
                 >
                   {discordid}
                   <button
@@ -413,9 +413,6 @@ const DailyRaffle = () => {
                 >
                   <div className="disconnect"></div> Connect Wallet
                 </button>
-              )}
-              {userwhitelist?.walletAddress && (
-                <div className="status success">You are Whitelisted</div>
               )}
             </div>
           </div>
