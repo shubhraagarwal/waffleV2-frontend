@@ -138,7 +138,6 @@ const DailyRaffle = () => {
   const inputadd = (e) => {
     const value = e.target.value;
     setdiscordid(value);
-    console.log(value);
   };
 
   const handleClick = () => {

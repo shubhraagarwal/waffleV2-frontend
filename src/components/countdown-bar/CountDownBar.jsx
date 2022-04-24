@@ -25,10 +25,11 @@ const CountDownBar = () => {
           }
         )
         .then((res) => {
+          console.log(res.data[0].entryTime);
           let entryTimeInHours = moment(res.data[0].entryTime).add(11, "hours");
           let currentTimeInHours = moment();
           let timeDifference = entryTimeInHours.diff(currentTimeInHours, "HH");
-
+          console.log(timeDifference);
           setHours(
             moment(entryTimeInHours).format("HH") -
               currentTimeInHours.format("HH")
@@ -39,7 +40,7 @@ const CountDownBar = () => {
         });
     }, 1000);
     return () => clearInterval(interval);
-  }, [account, hour]);
+  }, [account]);
 
   return (
     <div className="countdown-bar">
