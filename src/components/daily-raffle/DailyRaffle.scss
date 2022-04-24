@@ -1,5 +1,5 @@
-@import '../../styles/mixins';
-@import '../../styles/variables';
+@import "../../styles/mixins";
+@import "../../styles/variables";
 
 .daily-raffle {
   padding-bottom: 2em;
@@ -33,7 +33,7 @@
         box-shadow: 4px 4px 0px #fe4459;
         padding: 0.8em 1.2em;
         color: $white;
-        font-family: 'Superscratchy', sans-serif;
+        font-family: "Superscratchy", sans-serif;
       }
       button.blue-gradient {
         background: conic-gradient(
@@ -79,13 +79,13 @@
         }
       }
     }
-    .face-container[bounce='1'],
-    .mob-face[bounce='1'] {
+    .face-container[bounce="1"],
+    .mob-face[bounce="1"] {
       transition: all 1s ease-in-out;
       animation: bounce 0.5s linear;
     }
-    .face-container[bounce='2'],
-    .mob-face[bounce='2'] {
+    .face-container[bounce="2"],
+    .mob-face[bounce="2"] {
       transition: all 1s ease-in-out;
       animation: bounce 0.2s linear;
     }
@@ -98,15 +98,15 @@
     }
   }
 }
-#syrup{
+#syrup {
   width: 2rem;
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
-.mouse_move{
+.mouse_move {
   position: relative;
 }
-.countsclick{
+.countsclick {
   position: absolute;
   top: 80%;
   left: 50%;
@@ -115,14 +115,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .countsinner{
-    h3{
+  .countsinner {
+    h3 {
       color: #faf4f4af;
-    font-family: 'Luckiest Guy', cursive;
-    font-size: 6em;
-    padding-bottom: 30px;
-  }
-    
+      font-family: "Luckiest Guy", cursive;
+      font-size: 6em;
+      padding-bottom: 30px;
+    }
+
     // border: 5px solid rgb(230, 228, 228);
     // width: 100px;
     // height: 55px;
@@ -166,22 +166,20 @@
   }
 }
 
-iframe{
+iframe {
   display: none;
-  position: unset!important;
-  top: 0px!important;
-  left: 0px!important;
-  width: 0px!important;
-  height: 0px!important;
+  position: unset !important;
+  top: 0px !important;
+  left: 0px !important;
+  width: 0px !important;
+  height: 0px !important;
 }
-.daily-raffle .container .face-container .parts{
+.daily-raffle .container .face-container .parts {
   z-index: 12;
 }
-.daily-raffle h2{
+.daily-raffle h2 {
   z-index: 14;
 }
-
-
 
 .content-wrapper {
   position: relative;
@@ -233,11 +231,11 @@ iframe{
   }
 }
 
-iframe{
+iframe {
   display: none;
-  position: unset!important;
-  top: 0px!important;
-  left: 0px!important;
-  width: 0px!important;
-  height: 0px!important;
+  position: unset !important;
+  top: 0px !important;
+  left: 0px !important;
+  width: 0px !important;
+  height: 0px !important;
 }
