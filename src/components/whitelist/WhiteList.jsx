@@ -29,13 +29,13 @@ const WhiteList = (props) => {
         }
       )
       .then((response) => {
-        let res = Object.values(response.data[0]);
+        let res = response.data[0];
 
-        setsyrupp(res[3]);
+        setsyrupp(res.syrups);
 
-        setDiscord(res[2]);
+        setDiscord(res.discord_id);
 
-        temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
+        temp.push(response.data[0]);
       })
       .catch((err) => {
         return false;
@@ -60,21 +60,23 @@ const WhiteList = (props) => {
         "Access-Control-Allow-Origin": "*",
       })
       .then((response) => {
-        winr.push(
-          response.data[0],
-          response.data[1],
-          response.data[2],
-          response.data[3],
-          response.data[4],
-          response.data[5],
-          response.data[6],
-          response.data[7],
-          response.data[8],
-          response.data[9]
-        );
-        setwinner(winr);
+        // winr.push(
+        //   response.data[0],
+        //   response.data[1],
+        //   response.data[2],
+        //   response.data[3],
+        //   response.data[4],
+        //   response.data[5],
+        //   response.data[6],
+        //   response.data[7],
+        //   response.data[8],
+        //   response.data[9]
+        // );
+        // setwinner(winr);
+        console.log(response);
       })
       .catch((err) => {
+        console.log(err);
         return false;
       });
   };
