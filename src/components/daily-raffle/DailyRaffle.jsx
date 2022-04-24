@@ -220,13 +220,15 @@ const DailyRaffle = () => {
         }
       )
       .then((response) => {
-        let res = Object.values(response.data[0]);
-
-        setsyrCount(res[3]);
-        setEntryTime(res[5]);
-        temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
+        console.log(response.data[0]);
+        setdiscordid(response.data[0].discord_id);
+        setsyrCount(response.data[0].syrups);
+        setEntryTime(response.data[0].entryTime);
+        // setEntryTime(res[5]);
+        // temp.push(res[0], res[1], res[2], res[3], res[4], res[5], res[6]);
       })
       .catch((err) => {
+        console.log(err, "err");
         return false;
       });
   };
@@ -265,6 +267,7 @@ const DailyRaffle = () => {
   useEffect(() => {
     if (account) {
       adduser();
+      console.log("yes");
       getuser();
       getallwinner();
     }
@@ -278,17 +281,6 @@ const DailyRaffle = () => {
   const handleConnectmodal = () => {
     setShowModal(!showModal);
   };
-  // const handledisconnectmodal = () => {
-  //   setShowModal(showModal);
-  // }
-
-  useEffect(() => {
-    {
-      syrCount?.discordId === null
-        ? setShowModal(!showModal)
-        : setShowModal(showModal);
-    }
-  }, [syrCount, account]);
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -304,19 +296,20 @@ const DailyRaffle = () => {
         discordid: discordid,
       })
       .then((response) => {
-        if (response.data.code === 200) {
-          setShowModal(false);
-          getuser();
-          toast.success("Successfully Added Discord ID", {
-            position: "top-right",
-            autoClose: 8000,
-          });
-        } else {
-          toast.warning("This ID is already linked to another account", {
-            position: "top-right",
-            autoClose: 3000,
-          });
-        }
+        console.log(response.data);
+        // if (response.data.code === 200) {
+        //   setShowModal(false);
+        //   getuser();
+        //   toast.success("Successfully Added Discord ID", {
+        //     position: "top-right",
+        //     autoClose: 8000,
+        //   });
+        // } else {
+        //   toast.warning("This ID is already linked to another account", {
+        //     position: "top-right",
+        //     autoClose: 3000,
+        //   });
+        // }
       })
       .catch((err) => {
         toast.warning("This ID is already linked to another account", {
@@ -353,7 +346,11 @@ const DailyRaffle = () => {
                     onChange={inputadd}
                     placeholder="user#2232"
                   />
-                  <button onClick={dsicordenterance}>Submit</button>
+                  {discordid.length > 0 ? (
+                    <button onClick={dsicordenterance}>Submit</button>
+                  ) : (
+                    <button disabled>Submit</button>
+                  )}
                 </>
               ) : (
                 <>
@@ -397,7 +394,7 @@ const DailyRaffle = () => {
                     color: "white",
                   }}
                 >
-                  {`${discord}`}
+                  {discordid}
                   <button
                     className="blue-gradient"
                     onClick={connectMetaMask}
