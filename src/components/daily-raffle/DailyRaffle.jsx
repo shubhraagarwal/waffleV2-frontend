@@ -135,6 +135,11 @@ const DailyRaffle = () => {
   setInterval(() => {
     timer();
   }, 1000);
+  const inputadd = (e) => {
+    const value = e.target.value;
+    setdiscordid(value);
+    console.log(value);
+  };
 
   const handleClick = () => {
     setBounce(bounce + 1);
@@ -275,11 +280,6 @@ const DailyRaffle = () => {
       getallwinner();
     }
   }, [account]);
-
-  const inputadd = (e) => {
-    const value = e.target.value;
-    setdiscordid(value);
-  };
 
   const handleConnectmodal = () => {
     setShowModal(!showModal);
@@ -494,7 +494,7 @@ const DailyRaffle = () => {
               </div>
             </div>
           ) : (
-            <div>
+            <div className="d-none d-xl-block">
               <img src={freeze} alt="freeze" />
             </div>
           )}
@@ -509,7 +509,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {/* {hours < 0 || hours >= 12 ? (
+          {hours < 0 || hours >= 12 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
@@ -520,7 +520,11 @@ const DailyRaffle = () => {
                 bounce={bounce}
               />
             </div>
-          ) : null} */}
+          ) : (
+            <div className="d-xl-none">
+              <img src={freeze} alt="freeze" />
+            </div>
+          )}
         </div>
       </section>
       <WhiteList fun={syrupSub} />
