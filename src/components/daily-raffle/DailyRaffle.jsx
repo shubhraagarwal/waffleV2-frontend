@@ -148,7 +148,7 @@ const DailyRaffle = () => {
     //let tts = date.now()
     setcount(count + 1);
     console.log("clicked", typeof count, count, t);
-    if (count >= 500) {
+    if (count == 500) {
       console.log("clicked inside if");
       axios
         .post(
