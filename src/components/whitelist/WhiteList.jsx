@@ -60,19 +60,19 @@ const WhiteList = (props) => {
         "Access-Control-Allow-Origin": "*",
       })
       .then((response) => {
-        // winr.push(
-        //   response.data[0],
-        //   response.data[1],
-        //   response.data[2],
-        //   response.data[3],
-        //   response.data[4],
-        //   response.data[5],
-        //   response.data[6],
-        //   response.data[7],
-        //   response.data[8],
-        //   response.data[9]
-        // );
-        // setwinner(winr);
+        winr.push(
+          response.data[0],
+          response.data[1],
+          response.data[2],
+          response.data[3],
+          response.data[4],
+          response.data[5],
+          response.data[6],
+          response.data[7],
+          response.data[8],
+          response.data[9]
+        );
+        setwinner(winr);
         console.log(response);
       })
       .catch((err) => {
