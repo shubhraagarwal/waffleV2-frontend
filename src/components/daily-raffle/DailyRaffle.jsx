@@ -302,7 +302,7 @@ const DailyRaffle = () => {
       .then((response) => {
         console.log(response.data);
         setShowDiscord(false);
-        if (response.data.code === 200) {
+        if (response.data.code === "200") {
           setShowModal(false);
           getuser();
           toast.success("Successfully Added Discord ID", {
@@ -314,6 +314,7 @@ const DailyRaffle = () => {
             position: "top-right",
             autoClose: 3000,
           });
+          setdiscordid("");
         }
       })
       .catch((err) => {
