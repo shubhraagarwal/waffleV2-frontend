@@ -25,31 +25,69 @@ const CountDownBar = () => {
           }
         )
         .then((res) => {
-          console.log(res.data[0].entryTime);
-          let entryTimeInHours = moment(res.data[0].entryTime)
-            .add(11, "hours")
-            .format("YYYY-MM-DD HH:mm:ss");
-          let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
-          let timeDifference = moment(entryTimeInHours).diff(
-            currentTimeInHours,
-            "YYYY-MM-DD HH:mm:ss"
-          );
-          console.log(
-            moment(entryTimeInHours).format("HH"),
-            moment(currentTimeInHours).format("HH"),
-            moment(timeDifference).format("YYYY-MM-DD HH:mm:ss")
-          );
-          setHours(
-            moment(entryTimeInHours).format("HH") -
-              moment(currentTimeInHours).format("HH")
-          );
-          setMinutes(moment(timeDifference).format("mm"));
-          setSeconds(moment(timeDifference).format("ss"));
-          localStorage.setItem(
-            "entryTimeInHours",
-            moment(entryTimeInHours).format("HH") -
-              moment(currentTimeInHours).format("HH")
-          );
+          // console.clear();
+          if (
+            moment().format("DD") - moment(res.data[0].entryTime).format("DD") <
+            2
+          ) {
+            if (
+              moment().format("DD") ==
+              parseInt(moment(res.data[0].entryTime).format("DD")) + 1
+            ) {
+              let entryTimeInHours = moment(res.data[0].entryTime).format(
+                "YYYY-MM-DD HH:mm:ss "
+              );
+
+              let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
+
+              let timeDifference =
+                moment(currentTimeInHours).diff(entryTimeInHours);
+              console.log("yes", timeDifference, currentTimeInHours);
+
+              setHours(
+                moment(currentTimeInHours).format("HH") -
+                  moment(entryTimeInHours).format("HH")
+              );
+
+              setMinutes(moment(timeDifference).format("mm"));
+
+              setSeconds(moment(timeDifference).format("ss"));
+
+              localStorage.setItem(
+                "entryTimeInHours",
+                moment(entryTimeInHours).format("HH") -
+                  moment(currentTimeInHours).format("HH")
+              );
+            } else {
+              let entryTimeInHours = moment(res.data[0].entryTime)
+                .add(11, "hours")
+                .format("YYYY-MM-DD HH:mm:ss");
+              // moment(res.data[0].entryTime)
+              // .add(11, "hours")
+              // .format("YYYY-MM-DD HH:mm:ss");
+              let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
+              let timeDifference =
+                moment(entryTimeInHours).diff(currentTimeInHours);
+              // console.log(moment(timeDifference * 1000).format("HH:mm:ss"));
+              setHours(
+                moment(entryTimeInHours).format("HH") -
+                  moment(currentTimeInHours).format("HH")
+              );
+              setMinutes(moment(timeDifference).format("mm"));
+              setSeconds(moment(timeDifference).format("ss"));
+              localStorage.setItem(
+                "entryTimeInHours",
+                moment(entryTimeInHours).format("HH") -
+                  moment(currentTimeInHours).format("HH")
+              );
+              // console.log(
+              //   "entryTimeInHours",
+              //   entryTimeInHours,
+              //   "currentTimeInHours",
+              //   currentTimeInHours
+              // );
+            }
+          }
         });
     }, 1000);
     return () => clearInterval(interval);
