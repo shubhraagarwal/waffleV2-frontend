@@ -30,7 +30,7 @@ const WhiteList = (props) => {
       )
       .then((response) => {
         let res = response.data[0];
-
+        console.log(res);
         setsyrupp(res.syrups);
 
         setDiscord(res.discord_id);
@@ -42,18 +42,6 @@ const WhiteList = (props) => {
       });
   };
 
-  // // didnt got it
-  // const getalldiscorddasta = () => {
-  //   // setOpens(true)
-  //   axios
-  //     .get(`${API_URL}/api/v1/users/getAllUsers`)
-  //     .then((response) => {
-  //       setallusers(response.data.data);
-  //     })
-  //     .catch((err) => {
-  //       return false;
-  //     });
-  // };
   const getallwinner = () => {
     axios
       .get(`${API_URL}/api/v1/users/getAllWinner`, {
@@ -74,6 +62,21 @@ const WhiteList = (props) => {
         );
         setwinner(winr);
         console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  };
+
+  const getEnteries = () => {
+    axios
+      .get(`${API_URL}/api/v1/users/entryList`, {
+        "Access-Control-Allow-Origin": "*",
+      })
+      .then((response) => {
+        setallusers(response.data);
+        console.log(response.data[1].discord_id);
       })
       .catch((err) => {
         console.log(err);
@@ -114,13 +117,19 @@ const WhiteList = (props) => {
   const enterRaffle = () => {
     axios
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
-        walletAddress: temp[2],
-        discord_id: temp[3],
-        syrups: temp[4] - 8,
+        walletAddress: account,
+        discord_id: discord,
+        syrups: syrupp - 8,
       })
       .then((response) => {
+        console.log(response.data);
         if (response.data.code === "400") {
-          toast.error("You have already entered the raffle", {
+          toast.error("Error! Please try again", {
+            position: "top-right",
+            autoClose: 8000,
+          });
+        } else if (response.data.code === "200") {
+          toast.success("You have entered the raffle", {
             position: "top-right",
             autoClose: 8000,
           });
@@ -136,6 +145,7 @@ const WhiteList = (props) => {
     //   getalldiscorddasta();
     getallwinner();
     getuser();
+    getEnteries();
   }, [account]);
 
   return (
@@ -168,15 +178,10 @@ const WhiteList = (props) => {
             <div className="entries-container">
               <ol>
                 {allusers.map((value, index) => (
-                  <li key={index}>ID {value.discordId}</li>
+                  <li key={index}>ID {value.discord_id}</li>
                 ))}
               </ol>
             </div>
-          </div>
-          <div className="winText col-12 col-md-6">
-            {/* we can make a component here which will render this message when null and winners list otherwise */}
-            Congratulations To Today's winners 🥳🥳 <br />
-            {winner && <Winner props={winner} />}
           </div>
         </div>
       </div>
