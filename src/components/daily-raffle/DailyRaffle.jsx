@@ -420,7 +420,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours <= 0 || hours >= 12 ? (
+          {hours <= "0" || hours >= "12" ? (
             <div className="mouse_move d-none d-xl-block">
               <div
                 className="face-container"
