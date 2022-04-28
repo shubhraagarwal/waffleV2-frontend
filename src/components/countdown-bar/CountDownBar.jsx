@@ -4,9 +4,9 @@ import axios from "axios";
 import { API_URL_RAFFLE } from "../../utils/ApiURL";
 import moment from "moment";
 const CountDownBar = () => {
-  const [hour, setHours] = useState(null);
-  const [minute, setMinutes] = useState(null);
-  const [second, setSeconds] = useState(null);
+  const [hour, setHours] = useState(0);
+  const [minute, setMinutes] = useState(0);
+  const [second, setSeconds] = useState(0);
   const [secnd, setSecnd] = useState(0);
   const account = localStorage.getItem("wallet");
 
