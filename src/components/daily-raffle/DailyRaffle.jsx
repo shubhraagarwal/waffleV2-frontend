@@ -18,6 +18,7 @@ import "./DailyRaffle.scss";
 import { toast } from "react-toastify";
 import freeze from "../../assets/ICE_HEAD.png";
 import moment from "moment";
+import DiscordAuth from "../DiscordAuth/DiscordAuth";
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -73,13 +74,13 @@ const DailyRaffle = () => {
   // const [audio] = useState(new Audio({WaffleSound}));
 
   const [bounce, setBounce] = useState(0);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(499);
   const [inView, setInView] = useState(false);
   const { account } = useWeb3React();
   const { login, logout } = useAuth();
   const [winner, setwinner] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [discordid, setdiscordid] = useState("");
+  const [discordid, setdiscordid] = useState(null);
   const [day, setDay] = useState(0);
   const [syrCount, setsyrCount] = useState(0);
   const [entryTime, setEntryTime] = useState(0);
@@ -106,7 +107,6 @@ const DailyRaffle = () => {
     (e) => e?.walletAddress === account?.toLowerCase()
   );
   useEffect(() => {
-    console.clear();
     console.log(account);
     // setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
     if (account) {
@@ -163,7 +163,7 @@ const DailyRaffle = () => {
         .then((response) => {
           getuser();
           console.log(response);
-          window.location.reload();
+          window.location.assign("http://localhost:3000/raffle");
         })
         .catch((err) => {
           console.log(err);
@@ -212,6 +212,7 @@ const DailyRaffle = () => {
 
       .then((response) => {
         console.log(response);
+        getuser();
       })
       .catch((err) => {
         return false;
@@ -291,40 +292,6 @@ const DailyRaffle = () => {
     setShowModal(false);
   };
 
-  const dsicordenterance = () => {
-    // setOpens(true)
-    console.log("discordentrance", account, discordid);
-    axios
-      .post(`${API_URL_RAFFLE}/api/v1/users/addDiscordId`, {
-        walletAddress: account,
-        discordid: discordid,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setShowDiscord(false);
-        if (response.data.code === "200") {
-          setShowModal(false);
-          getuser();
-          toast.success("Successfully Added Discord ID", {
-            position: "top-right",
-            autoClose: 8000,
-          });
-        } else {
-          toast.warning("This ID is already linked to another account", {
-            position: "top-right",
-            autoClose: 3000,
-          });
-          setdiscordid("");
-        }
-      })
-      .catch((err) => {
-        toast.warning("This ID is already linked to another account", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        return false;
-      });
-  };
   let hours = localStorage.getItem("entryTimeInHours");
   return (
     <>
@@ -350,7 +317,7 @@ const DailyRaffle = () => {
             </div>
           </div>
         )}
-        {showDiscord && !hasDiscord && (
+        {/* {showDiscord && !hasDiscord && (
           <div className="modal-container">
             <div className="content-wrapper">
               <h3>Enter Your Discord id</h3>
@@ -362,7 +329,7 @@ const DailyRaffle = () => {
               )}
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="countsclick">
           <div className="countsinner">
@@ -383,6 +350,7 @@ const DailyRaffle = () => {
 
                 {syrCount}
               </div>
+
               <CountDownBar />
             </div>
             <div className="d-flex justify-content-center justify-content-md-end align-items-center flex-column w-75">
@@ -397,7 +365,8 @@ const DailyRaffle = () => {
                   }}
                   className=" d-flex flex-column flex-md-row "
                 >
-                  {discordid}
+                  {" "}
+                  <DiscordAuth />
                   <button
                     className="blue-gradient"
                     onClick={connectMetaMask}

@@ -22,6 +22,7 @@
     "bignumber.js": "^9.0.1",
     "canvas-confetti": "^1.5.1",
     "dangerously-set-html-content": "^1.0.9",
+    "discord-oauth2": "^2.10.0",
     "in-view": "^0.6.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
