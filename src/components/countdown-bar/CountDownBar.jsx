@@ -26,6 +26,7 @@ const CountDownBar = () => {
         )
         .then((res) => {
           // console.clear();
+          // console.log(res);
           if (
             moment().format("DD") - moment(res.data[0].entryTime).format("DD") <
             2
@@ -57,6 +58,14 @@ const CountDownBar = () => {
                 "entryTimeInHours",
                 moment(entryTimeInHours).format("HH") -
                   moment(currentTimeInHours).format("HH")
+              );
+              localStorage.setItem(
+                "entryTimeInMinutes",
+                moment(timeDifference).format("mm")
+              );
+              localStorage.setItem(
+                "entryTimeInSeconds",
+                moment(timeDifference).format("ss")
               );
             } else {
               let entryTimeInHours = moment(res.data[0].entryTime)
