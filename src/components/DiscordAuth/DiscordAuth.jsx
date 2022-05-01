@@ -91,7 +91,7 @@ function DiscordAuth() {
           Logged in as : {discord}
         </div>
       ) : (
-        <a href="https://discord.com/oauth2/authorize?response_type=code&client_id=969956585545809930&scope=identify%20guilds.join&redirect_uri=http%3A%2F%2Flocalhost:3000/raffle">
+        <a href="https://discord.com/oauth2/authorize?response_type=code&client_id=969956585545809930&scope=identify%20guilds.join&redirect_uri=https%3A%2F%2Fwaffleclicker.netlify.app/raffle">
           <button className="blue-gradient" data-aos="fade">
             <svg
               width="31"
