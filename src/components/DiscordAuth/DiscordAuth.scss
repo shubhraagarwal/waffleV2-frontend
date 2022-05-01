@@ -1,0 +1,13 @@
+.blue-gradient {
+  background: conic-gradient(
+    from 140.92deg at 10.96% 48.47%,
+    #7f3efe 0deg,
+    #6b24fe 22.78deg,
+    #935df9 180.34deg,
+    #7f3efe 360deg
+  );
+  box-shadow: 4px 4px 0px #fe4459;
+  padding: 1rem;
+  min-width: 12vw;
+  margin-right: 2rem;
+}

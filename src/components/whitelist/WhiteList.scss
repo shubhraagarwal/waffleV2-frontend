@@ -49,8 +49,8 @@
     .entries-container {
       padding: 1em;
       background-color: #ffffff;
-      max-width: 400px;
       max-height: 500px;
+      min-width: 60vw;
       overflow-y: scroll;
       ol {
         li {
@@ -93,7 +93,9 @@
     }
   }
 }
-
+.border {
+  border: 1px solid red;
+}
 iframe {
   display: none;
   position: unset !important;

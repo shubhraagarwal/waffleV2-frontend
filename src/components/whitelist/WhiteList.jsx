@@ -15,13 +15,11 @@ const WhiteList = (props) => {
   let temp = [];
   let winr = [];
 
-  const { account } = useWeb3React();
-
   const getuser = () => {
     axios
       .post(
         `${API_URL_RAFFLE}/api/v1/users/getUser`,
-        { walletAddress: account },
+        { walletAddress: props.account },
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -30,14 +28,15 @@ const WhiteList = (props) => {
       )
       .then((response) => {
         let res = response.data[0];
-        console.log(res);
-        setsyrupp(res.syrups);
+        console.log("response", response);
+        setsyrupp(response.data[0].syrups);
 
-        setDiscord(res.discord_id);
+        setDiscord(response.data[0].discord_id);
 
         temp.push(response.data[0]);
       })
       .catch((err) => {
+        console.log(err, "err");
         return false;
       });
   };
@@ -117,8 +116,8 @@ const WhiteList = (props) => {
   const enterRaffle = () => {
     axios
       .post(`${API_URL}/api/v1/users/enterWaffle`, {
-        walletAddress: account,
-        discord_id: discord,
+        walletAddress: props.account.toString(),
+        discordid: discord,
         syrups: syrupp - 8,
       })
       .then((response) => {
@@ -144,9 +143,10 @@ const WhiteList = (props) => {
   useEffect(() => {
     //   getalldiscorddasta();
     getallwinner();
+    console.log(props, "props");
     getuser();
     getEnteries();
-  }, [account]);
+  }, [props.account]);
 
   return (
     <section className="container-fluid white-list">
@@ -172,7 +172,7 @@ const WhiteList = (props) => {
           </button>
         )}
 
-        <div className="row g-5 data-table">
+        <div className="row g-5 data-table ">
           <div className="col-12 col-md-6">
             <h3>Entries</h3>
             <div className="entries-container">

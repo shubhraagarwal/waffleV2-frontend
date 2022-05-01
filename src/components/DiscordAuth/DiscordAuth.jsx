@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { API_URL_RAFFLE } from "../../utils/ApiURL";
+import "./DiscordAuth.scss";
 function DiscordAuth() {
   const [discord, setDiscord] = React.useState();
   const getuser = () => {
@@ -53,6 +54,7 @@ function DiscordAuth() {
                 console.log(response.data);
                 setDiscord(response.data.id);
                 if (response.data.code === "200") {
+                  localStorage.setItem("discord", response.data.id);
                   toast.success("Successfully Added Discord ID", {
                     position: "top-right",
                     autoClose: 8000,
@@ -85,7 +87,9 @@ function DiscordAuth() {
   return (
     <div>
       {discord ? (
-        discord
+        <div className="blue-gradient" data-aos="fade">
+          Logged in as : {discord}
+        </div>
       ) : (
         <a href="https://discord.com/oauth2/authorize?response_type=code&client_id=969956585545809930&scope=identify%20guilds.join&redirect_uri=http%3A%2F%2Flocalhost:3000/raffle">
           <button className="blue-gradient" data-aos="fade">

@@ -18,7 +18,7 @@ import "./DailyRaffle.scss";
 import { toast } from "react-toastify";
 import freeze from "../../assets/ICE_HEAD.png";
 import moment from "moment";
-import DiscordAuth from "../DiscordAuth/DiscordAuth";
+import DiscordAuth from "../DiscordAuth/DiscordAuth.jsx";
 const canvasStyles = {
   position: "fixed",
   pointerEvents: "none",
@@ -293,6 +293,8 @@ const DailyRaffle = () => {
   };
 
   let hours = localStorage.getItem("entryTimeInHours");
+  let minutes = localStorage.getItem("entryTimeInminutes");
+  let seconds = localStorage.getItem("entryTimeInSeconds");
   return (
     <>
       <section
@@ -347,8 +349,7 @@ const DailyRaffle = () => {
                   id="syrup"
                   className="img-fluid ms-2"
                 />
-
-                {syrCount}
+                {syrCount} Syrups
               </div>
 
               <CountDownBar />
@@ -389,8 +390,13 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {hours <= "0" || hours >= "12" || hours <= 0 || hours >= 12 ? (
-            <div className="mouse_move d-none d-xl-block">
+          {parseInt(hours) <= 0 || parseInt(hours) >= 12 ? (
+            <div
+              className="mouse_move d-none d-xl-block"
+              onLoad={() => {
+                console.log("line 395", "7" >= "12");
+              }}
+            >
               <div
                 className="face-container"
                 onClick={handleClick}
@@ -475,7 +481,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {hours <= "0" || hours >= "12" || hours <= 0 || hours >= 12 ? (
+          {parseInt(hours) <= 0 || parseInt(hours) >= 12 ? (
             <div className="d-xl-none">
               <img
                 src={logo}
@@ -493,7 +499,7 @@ const DailyRaffle = () => {
           )}
         </div>
       </section>
-      <WhiteList fun={syrupSub} />
+      <WhiteList account={account} syrups={syrCount} discord={discordid} />
     </>
   );
 };
