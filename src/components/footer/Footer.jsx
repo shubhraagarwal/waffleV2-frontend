@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-12 col-lg-4 order-2 order-lg-0 d-flex align-items-end justify-content-center mt-4 mt-lg-0">
             <div className="copyright">
-              <p className="text-center text-lg-start">Starlight Labs</p>
+              <p className="text-center text-lg-start">Woodstock Labs</p>
               <Link to="/terms-and-conditions">
                 <p className="text-center text-lg-start">
                   ©2022 odd waffles.{" "}

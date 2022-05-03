@@ -1,14 +1,12 @@
-import React from 'react';
-import DailyRaffle from '../../components/daily-raffle/DailyRaffle';
-import NavigationBar from '../../components/navigationbar/NavigationBar';
-import WhiteList from '../../components/whitelist/WhiteList';
+import React from "react";
+import DailyRaffle from "../../components/daily-raffle/DailyRaffle";
+import NavigationBar from "../../components/navigationbar/NavigationBar";
 
 const Raffle = () => {
   return (
     <div>
       <NavigationBar home />
       <DailyRaffle />
-  
     </div>
   );
 };

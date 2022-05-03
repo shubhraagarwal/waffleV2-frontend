@@ -1,17 +1,15 @@
-import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URL, API_URL_RAFFLE } from "../../utils/ApiURL";
 import "./WhiteList.scss";
-import Winner from "../winner/Winner";
 import { toast } from "react-toastify";
 
 const WhiteList = (props) => {
   const [syrupp, setsyrupp] = useState("");
   const [discord, setDiscord] = useState("");
   const [allusers, setallusers] = useState([]);
-  const [winner, setwinner] = useState([]);
-  const [wintime, setwintime] = useState("");
+  const [, setwinner] = useState([]);
+  const [wintime] = useState("");
   let temp = [];
   let winr = [];
 
@@ -27,8 +25,6 @@ const WhiteList = (props) => {
         }
       )
       .then((response) => {
-        let res = response.data[0];
-        console.log("response", response);
         setsyrupp(response.data[0].syrups);
 
         setDiscord(response.data[0].discord_id);
@@ -85,10 +81,10 @@ const WhiteList = (props) => {
   var now = new Date(wintime);
   var tttt = now.setDate(now.getDate() + 1);
 
-  const [day, setDay] = useState(0);
-  const [hour, setHour] = useState(0);
-  const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(0);
+  const [, setDay] = useState(0);
+  const [, setHour] = useState(0);
+  const [, setMin] = useState(0);
+  const [, setSec] = useState(0);
 
   function timer() {
     var time = new Date();
@@ -132,8 +128,8 @@ const WhiteList = (props) => {
             position: "top-right",
             autoClose: 8000,
           });
+          window.location.href("https://waffleclicker.netlify.app/raffle");
         }
-        // window.location.reload();
       })
       .catch((err) => {
         return false;

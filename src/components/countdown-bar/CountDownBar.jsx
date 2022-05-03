@@ -1,122 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./CountDownBar.scss";
-import axios from "axios";
-import { API_URL_RAFFLE } from "../../utils/ApiURL";
-import moment from "moment";
-const CountDownBar = () => {
-  const [hour, setHours] = useState(0);
-  const [minute, setMinutes] = useState(0);
-  const [second, setSeconds] = useState(0);
-  const [secnd, setSecnd] = useState(0);
-  const account = localStorage.getItem("wallet");
+import { useTimer } from "react-timer-hook";
+const CountDownBar = ({ time, clickable }) => {
+  console.log("props9", time);
 
+  const tim = new Date(time);
+  tim.setHours(tim.getHours() + 12);
+
+  const { seconds, minutes, hours, restart } = useTimer({
+    tim,
+    onExpire: () => {
+      console.warn("expired");
+      clickable(true);
+    },
+  });
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSecnd((secnd) => secnd + 1);
-
-      axios
-        .post(
-          `${API_URL_RAFFLE}/api/v1/users/getUser`,
-          { walletAddress: account },
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
-        .then((res) => {
-          // console.clear();
-          // console.log(res);
-          if (
-            moment().format("DD") - moment(res.data[0].entryTime).format("DD") <
-            2
-          ) {
-            if (
-              moment().format("DD") ==
-              parseInt(moment(res.data[0].entryTime).format("DD")) + 1
-            ) {
-              let entryTimeInHours = moment(res.data[0].entryTime).format(
-                "YYYY-MM-DD HH:mm:ss "
-              );
-
-              let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
-
-              let timeDifference =
-                moment(currentTimeInHours).diff(entryTimeInHours);
-              console.log("yes", timeDifference, currentTimeInHours);
-
-              setHours(
-                moment(currentTimeInHours).format("HH") -
-                  moment(entryTimeInHours).format("HH")
-              );
-
-              setMinutes(moment(timeDifference).format("mm"));
-
-              setSeconds(moment(timeDifference).format("ss"));
-
-              localStorage.setItem(
-                "entryTimeInHours",
-                moment(entryTimeInHours).format("HH") -
-                  moment(currentTimeInHours).format("HH")
-              );
-              localStorage.setItem(
-                "entryTimeInMinutes",
-                moment(timeDifference).format("mm")
-              );
-              localStorage.setItem(
-                "entryTimeInSeconds",
-                moment(timeDifference).format("ss")
-              );
-            } else {
-              let entryTimeInHours = moment(res.data[0].entryTime)
-                .add(11, "hours")
-                .format("YYYY-MM-DD HH:mm:ss");
-              // moment(res.data[0].entryTime)
-              // .add(11, "hours")
-              // .format("YYYY-MM-DD HH:mm:ss");
-              let currentTimeInHours = moment().format("YYYY-MM-DD HH:mm:ss");
-              let timeDifference =
-                moment(entryTimeInHours).diff(currentTimeInHours);
-              // console.log(moment(timeDifference * 1000).format("HH:mm:ss"));
-              setHours(
-                moment(entryTimeInHours).format("HH") -
-                  moment(currentTimeInHours).format("HH")
-              );
-              setMinutes(moment(timeDifference).format("mm"));
-              setSeconds(moment(timeDifference).format("ss"));
-              localStorage.setItem(
-                "entryTimeInHours",
-                moment(entryTimeInHours).format("HH") -
-                  moment(currentTimeInHours).format("HH")
-              );
-              // console.log(
-              //   "entryTimeInHours",
-              //   entryTimeInHours,
-              //   "currentTimeInHours",
-              //   currentTimeInHours
-              // );
-            }
-          }
-        });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [account]);
+    restart(tim);
+  }, [time]);
+  console.log(seconds, minutes, hours, ",,,", tim);
 
   return (
     <div className="countdown-bar">
       <div className="time-container">
         <ul className="time-container">
           <li>
-            <h3>
-              {hour >= 0 && hour < 12 ? hour : 0}
-              HR
-            </h3>
+            <h3>{hours}HR</h3>
           </li>
           <li>
-            <h3>{hour >= 0 && hour < 12 ? minute : 0} Min</h3>
+            <h3> {minutes} Min</h3>
           </li>
           <li>
-            <h3>{hour >= 0 && hour < 12 ? second : 0} Sec</h3>
+            <h3>{seconds} Sec</h3>
           </li>
         </ul>
       </div>
