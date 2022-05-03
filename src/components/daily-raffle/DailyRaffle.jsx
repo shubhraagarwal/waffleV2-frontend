@@ -81,17 +81,13 @@ const DailyRaffle = () => {
   const [winner, setwinner] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [discordid, setdiscordid] = useState(null);
-  const [day, setDay] = useState(0);
   const [syrCount, setsyrCount] = useState(0);
-  const [entryTime, setEntryTime] = useState(0);
-  // const { Time } = PresaleStartEnd();
-  const [hrs, setHour] = useState(0);
-  const [min, setMin] = useState(0);
-  const [hasDiscord, setHasDiscord] = useState(0);
-  const [showDiscord, setShowDiscord] = useState();
+  const [entryTime, setEntryTime] = useState();
+  const [, setHasDiscord] = useState(0);
+  const [, setShowDiscord] = useState();
   const [splicedWalletId, setSplicedWalletId] = useState("");
+  const [clickable, setClickable] = useState(false);
 
-  let temp = [];
   let winr = [];
   const syrupSub = () => {
     if (syrCount > 0) {
@@ -103,12 +99,8 @@ const DailyRaffle = () => {
   const onSound = () => {
     new Audio(audio).play();
   };
-  var userwhitelist = winner?.find(
-    (e) => e?.walletAddress === account?.toLowerCase()
-  );
   useEffect(() => {
     console.log(account);
-    // setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
     if (account) {
       setSplicedWalletId(`${account.slice(0, 4)}...${account.slice(-4)}`);
       setShowDiscord(true);
@@ -163,7 +155,7 @@ const DailyRaffle = () => {
         .then((response) => {
           getuser();
           console.log(response);
-          window.location.assign("http://waffleclicker.netlify.app/raffle");
+          window.location.assign("https://waffleclicker.netlify.app/raffle");
         })
         .catch((err) => {
           console.log(err);
@@ -352,9 +344,9 @@ const DailyRaffle = () => {
                 {syrCount} Syrups
               </div>
 
-              <CountDownBar />
+              <CountDownBar time={entryTime} clickable={setClickable} />
             </div>
-            <div className="d-flex justify-content-center justify-content-md-end align-items-center flex-column w-75">
+            <div className="login-buttons">
               {account ? (
                 <div
                   style={{
@@ -390,7 +382,7 @@ const DailyRaffle = () => {
 
           {/* raffle for pc  */}
 
-          {parseInt(hours) <= 0 || parseInt(hours) >= 12 ? (
+          {clickable ? (
             <div
               className="mouse_move d-none d-xl-block"
               onLoad={() => {
@@ -481,7 +473,7 @@ const DailyRaffle = () => {
           </div>
         </div> */}
           {/* raffle for mobile  */}
-          {parseInt(hours) <= 0 || parseInt(hours) >= 12 ? (
+          {clickable ? (
             <div className="d-xl-none">
               <img
                 src={logo}

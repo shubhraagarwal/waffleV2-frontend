@@ -39,7 +39,7 @@ function DiscordAuth() {
           code: code,
           scope: "identify guilds",
           grantType: "authorization_code",
-          redirectUri: "http://localhost:3000/raffle",
+          redirectUri: "https://waffleclicker.netlify.app/raffle",
         })
         .then((res) => {
           oauth.getUser(res.access_token).then((res) => {
@@ -85,10 +85,12 @@ function DiscordAuth() {
   }, []);
 
   return (
-    <div>
+    <div className="button-parent">
       {discord ? (
-        <div className="blue-gradient" data-aos="fade">
-          Logged in as : {discord}
+        <div className="logged-parent">
+          <div className="blue-gradient logged-in" data-aos="fade">
+            Logged in as : {discord}
+          </div>
         </div>
       ) : (
         <a href="https://discord.com/oauth2/authorize?response_type=code&client_id=969956585545809930&scope=identify%20guilds.join&redirect_uri=https%3A%2F%2Fwaffleclicker.netlify.app/raffle">
