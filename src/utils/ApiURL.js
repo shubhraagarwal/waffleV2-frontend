@@ -10,5 +10,5 @@
 // export const API_URL_RAFFLE =
 //   "http://ec2-34-222-88-208.us-west-2.compute.amazonaws.com:4000";
 // export const API_URL_RAFFLE = "http://localhost:1337";
-export const API_URL = "https://api.tyou.me/";
-export const API_URL_RAFFLE = "https://api.tyou.me/";
+export const API_URL = "https://api.tyou.me";
+export const API_URL_RAFFLE = "https://api.tyou.me";

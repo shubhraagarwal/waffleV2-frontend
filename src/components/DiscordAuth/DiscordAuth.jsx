@@ -51,7 +51,7 @@ function DiscordAuth() {
                 discordid: `${res.username}#${res.discriminator}`,
               })
               .then((response) => {
-                console.log(response.data);
+                console.log(response.data, "hehe");
                 setDiscord(response.data.id);
                 if (response.data.code === "200") {
                   localStorage.setItem("discord", response.data.id);
