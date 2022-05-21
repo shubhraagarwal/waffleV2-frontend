@@ -3,8 +3,8 @@ import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactCanvasConfetti from "react-canvas-confetti";
-// import JoinDiscord from '../modal/JoinDiscord';
 import close from "../../assets/close.svg";
+import syrupbottle from "../../assets/syrupbottle.png";
 import audio from "../../assets/confetti sound.mp3";
 import eyes from "../../assets/eyes2.png";
 import face from "../../assets/face.png";
@@ -336,7 +336,7 @@ const DailyRaffle = () => {
             <div className="d-flex justify-content-center justify-content-md-start flex-column">
               <div className="balance" data-aos="fade">
                 <img
-                  src="https://media.discordapp.net/attachments/937551194837110804/943235118775042149/unknown.png"
+                  src={syrupbottle}
                   alt="syrCount"
                   id="syrup"
                   className="img-fluid ms-2"

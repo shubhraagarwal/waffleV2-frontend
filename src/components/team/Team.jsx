@@ -6,7 +6,7 @@ import team3 from "../../assets/waffle1.png";
 import team4 from "../../assets/waffle7.png";
 import team5 from "../../assets/waffle8.png";
 import team6 from "../../assets/waffle2.png";
-import team8 from "../../assets/waffle10.jpg";
+import team8 from "../../assets/Wizard.png";
 import goose from "../../assets/Goose.png";
 import cepted from "../../assets/cepted.png";
 const Team = () => {
