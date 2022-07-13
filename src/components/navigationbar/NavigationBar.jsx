@@ -1,74 +1,74 @@
-import React from 'react';
-import './NavigationBar.scss';
-import logo from '../../assets/nav-logo.png';
-import hamburger from '../../assets/hamburger.png';
-import { Link } from 'react-scroll';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import "./NavigationBar.scss";
+import logo from "../../assets/nav-logo.png";
+import hamburger from "../../assets/hamburger.png";
+import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 const NavigationBar = ({ home }) => {
   return (
-    <nav className='navbar navbar-expand-xl navbar-light'>
-      <div className='container'>
-        <NavLink exact to='/'>
-          <span className='navbar-brand'>
-            <img src={logo} alt='odd waffles' className='img-fluid me-2' /> odd
+    <nav className="navbar navbar-expand-xl navbar-light">
+      <div className="container">
+        <NavLink exact to="/">
+          <span className="navbar-brand">
+            <img src={logo} alt="odd waffles" className="img-fluid me-2" /> odd
             waffles
           </span>
         </NavLink>
         <button
-          className='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarNav'
-          aria-controls='navbarNav'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <img
             src={hamburger}
-            alt='hamburger'
-            className='img-fluid hamburger'
+            alt="hamburger"
+            className="img-fluid hamburger"
           />
         </button>
         {home && (
-          <div className='collapse navbar-collapse' id='navbarNav'>
-            <ul className='navbar-nav'>
-              <li className='nav-item'>
-                <NavLink to='/raffle' className='nav-link'>
-                  Waffle Clicker
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink to="/raffle" className="nav-link">
+                  Clicker
                 </NavLink>
               </li>
-              <li className='nav-item'>
+              <li className="nav-item">
                 <Link
-                  to='rarity'
+                  to="rarity"
                   spy={true}
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className='nav-link'
+                  className="nav-link"
                 >
                   rarity
                 </Link>
               </li>
-              <li className='nav-item'>
+              <li className="nav-item">
                 <Link
-                  to='roadmap'
+                  to="roadmap"
                   spy={true}
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className='nav-link'
+                  className="nav-link"
                 >
-                  roadmap
+                  no roadmap
                 </Link>
               </li>
-              <li className='nav-item'>
+              <li className="nav-item">
                 <Link
-                  to='team'
+                  to="team"
                   spy={true}
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className='nav-link'
+                  className="nav-link"
                 >
                   team
                 </Link>

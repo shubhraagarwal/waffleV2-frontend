@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import "../../styles/variables";
+@import "../../styles/mixins";
 
 .roadmap {
   background: conic-gradient(
@@ -18,7 +18,7 @@
     &.active {
       position: relative;
       &::before {
-        content: '';
+        content: "";
         display: block;
         height: 105%;
         width: 100%;
@@ -49,6 +49,10 @@
     h3 {
       padding-left: 1em;
       margin-bottom: 1em;
+      font-size: 48px;
+    }
+    p {
+      font-size: 25px;
     }
     ul {
       li {
